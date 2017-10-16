@@ -4,10 +4,12 @@ import java.util.List;
 import uk.co.glasys.Cell;
 import uk.co.glasys.Edge;
 import uk.co.glasys.Maze;
+import java.util.ArrayList;
 
 public abstract class MazeAlgorithm
 {
-	protected Cell [] cellList;
+	protected List<Cell> cellList = new ArrayList<Cell>();
+
 	
 	/**
 	 * Carve a path through the maze
@@ -31,14 +33,13 @@ public abstract class MazeAlgorithm
 		return className;
 	}	
 	
-	protected Cell [] generateCellList(Maze maze)
+	protected List<Cell> generateCellList(Maze maze)
 	{
-		cellList = new Cell[maze.getWidth() * maze.getHeight()];
-		for(int i = 0; i < cellList.length; ++i)
+		for(int i = 0; i < cellList.size(); ++i)
 		{
 			int x = i % maze.getWidth();
 			int y = i / maze.getHeight();
-			cellList[i] = new Cell(x, y);
+			cellList.add(new Cell(x, y));
 		}
 		return cellList;
 	}	

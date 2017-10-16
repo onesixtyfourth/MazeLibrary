@@ -1,5 +1,7 @@
 package uk.co.glasys;
 
+import java.util.Objects;
+
 public class Maze
 {
 	private static final int DEFAULT_WIDTH = 10;	
@@ -12,6 +14,11 @@ public class Maze
 	private int height;
 	public int getHeight(){return height;}
 	public void setHeight(int height){this.height = height;}	
+	
+	public int getCellsInMaze()
+	{
+		return getWidth() * getHeight();
+	}
 	
 	
 	public Maze()
@@ -34,6 +41,30 @@ public class Maze
 	public String toString()
 	{
 		return String.format("Width = %d, Height = %d", getWidth(), getHeight());
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		boolean equal = false;
+		
+		if(Objects.nonNull(obj) && this == obj)
+		{
+			equal = true;
+		}
+		else if(obj instanceof Maze)
+		{
+			Maze maze = (Maze)obj;
+			equal = getHeight() == maze.getHeight() && getWidth() == maze.getWidth();
+		}
+		
+		return equal;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(getWidth(), getHeight());
 	}
 }
 

@@ -1,5 +1,7 @@
 package uk.co.glasys;
 
+import java.util.Objects;
+
 public class Cell
 {
 	private static final int DEFAULT_SIDES = 4;
@@ -33,5 +35,33 @@ public class Cell
 	public String toString()
 	{
 		return String.format("X = %d, Y = %d, Sides = %d", getX(), getY(), getNumberOfSides());
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		boolean equal = false;
+		
+		if(Objects.nonNull(obj) && this == obj)
+		{
+			equal = true;
+		}
+		else if(obj instanceof Cell)
+		{
+			Cell cell = (Cell)obj;
+			if(getNumberOfSides() == cell.getNumberOfSides() 
+					&&  getX() == cell.getX() 
+					&& getY() == cell.getY())
+			{
+				equal = true;
+			}
+		}
+		return equal;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(getNumberOfSides(), getX(), getY());
 	}
 }

@@ -1,7 +1,6 @@
 package uk.co.glasys;
 
 import java.util.List;
-
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 
 public class EdgeListGenerator
