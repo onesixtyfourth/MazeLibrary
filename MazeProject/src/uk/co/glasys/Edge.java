@@ -41,8 +41,7 @@ public class Edge
 	
 	@Override
 	public int hashCode()
-	{
-		
+	{		
 		return Objects.hash(getLeft(), getRight());
 	}
 }

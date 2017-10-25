@@ -15,7 +15,7 @@ public class Maze
 	public int getHeight(){return height;}
 	public void setHeight(int height){this.height = height;}	
 	
-	public int getCellsInMaze()
+	public int size()
 	{
 		return getWidth() * getHeight();
 	}
@@ -57,7 +57,6 @@ public class Maze
 			Maze maze = (Maze)obj;
 			equal = getHeight() == maze.getHeight() && getWidth() == maze.getWidth();
 		}
-		
 		return equal;
 	}
 	
