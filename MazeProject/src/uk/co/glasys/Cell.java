@@ -80,6 +80,6 @@ public class Cell
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(getNumberOfSides(), getX(), getY());
+		return Objects.hash(getNumberOfSides(), getX(), getY(), getState());
 	}
 }

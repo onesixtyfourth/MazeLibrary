@@ -1,11 +1,11 @@
 package uk.co.glasys.tests;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import uk.co.glasys.Cell.CellState;
+import org.junit.Test;
+
 import uk.co.glasys.Maze;
-import uk.co.glasys.mazealgorithms.PrimsAlgorithm;
 
 public class MazeTests
 {

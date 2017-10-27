@@ -24,6 +24,7 @@ public class PrimsAlgorithm implements MazeAlgorithm
 		{//TODO need to accommodate more than four sides
 			int index = maze.getCellList().indexOf(cell);
 			Cell toCheck = null;
+			
 			switch (i)
 			{
 				case 0:
@@ -94,16 +95,33 @@ public class PrimsAlgorithm implements MazeAlgorithm
 					if(!getNeighbours(edge.getRight()).isEmpty())
 					{
 						currentCell = edge.getRight();
-						break;//TODO breaking only allows one edge to be checked
+						break;
 					}
 					else if(!getNeighbours(edge.getLeft()).isEmpty())
 					{
 						currentCell = edge.getLeft();
-						break;//TODO breaking only allows one edge to be checked
+						break;
 					}
 				}
 			}
 		}
 		return edges;
 	}	
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		boolean equal = false;
+		if(Objects.nonNull(obj) && this == obj)
+		{
+			equal = true;
+		}
+		return equal;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(maze.hashCode());
+	}
 }

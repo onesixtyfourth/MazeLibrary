@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 
 public class Maze
@@ -70,11 +71,18 @@ public class Maze
 	{
 		setEdgeList(getAlgorithm().carveMaze(this));
 	}
+	
+	public void resetMaze()
+	{
+		getEdgeList().clear();
+		getCellList().forEach(l -> l.setState(CellState.OUT));
+	}
 		
 	@Override
 	public String toString()
 	{
-		return String.format("Width = %d, Height = %d", getWidth(), getHeight());
+		return String.format("Width : %d, Height : %d, Algorithm Name : %s", 
+						getWidth(), getHeight(), getAlgorithm().getAlgorithmName());
 	}
 	
 	@Override
@@ -97,7 +105,8 @@ public class Maze
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(getWidth(), getHeight());
+		return Objects.hash(getWidth(), getHeight(), algorithm.hashCode(),
+						getCellList().hashCode(), getEdgeList().hashCode());
 	}
 }
 
