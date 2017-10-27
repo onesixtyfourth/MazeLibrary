@@ -19,9 +19,23 @@ public class Cell
 	public int getY(){return y;}
 	public void setY(int y){this.y = y;}
 	
+	private CellState state;	
+	public void setState(CellState state){this.state = state;}
+	public CellState getState()
+	{
+		return state;
+	}
+	
+	
+	public static enum CellState
+	{
+		IN, OUT, FRONTIER
+	}
+	
+	
 	public Cell(int x, int y)
 	{
-		this(x, y, DEFAULT_SIDES);
+		this(x, y, getDefaultSides());
 	}
 	
 	public Cell(int x, int y, int sides)
@@ -29,12 +43,14 @@ public class Cell
 		setX(x);
 		setY(y);
 		setNumberOfSides(sides);
+		setState(CellState.OUT);
 	}
+	
 	
 	@Override
 	public String toString()
 	{
-		return String.format("X = %d, Y = %d, Sides = %d", getX(), getY(), getNumberOfSides());
+		return String.format("X = %d, Y = %d, Sides = %d, State = %s", getX(), getY(), getNumberOfSides(), getState());
 	}
 	
 	@Override
@@ -51,7 +67,8 @@ public class Cell
 			Cell cell = (Cell)obj;
 			if(getNumberOfSides() == cell.getNumberOfSides() 
 					&&  getX() == cell.getX() 
-					&& getY() == cell.getY())
+					&& getY() == cell.getY()
+					&& getState() == cell.getState())
 			{
 				equal = true;
 			}

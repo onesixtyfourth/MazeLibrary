@@ -1,6 +1,10 @@
 package uk.co.glasys;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 
 public class Maze
 {
@@ -15,11 +19,18 @@ public class Maze
 	public int getHeight(){return height;}
 	public void setHeight(int height){this.height = height;}	
 	
-	public int size()
-	{
-		return getWidth() * getHeight();
-	}
+	private MazeAlgorithm algorithm;	
+	public MazeAlgorithm getAlgorithm(){return algorithm;}
+	public void setAlgorithm(MazeAlgorithm algorithm){this.algorithm = algorithm;}	
 	
+	protected List<Cell> cellList;	
+	public List<Cell> getCellList(){return cellList;}
+	public void setCellList(List<Cell> cellList){this.cellList = cellList;}
+	
+	private List<Edge> edgeList;
+	public List<Edge> getEdgeList(){return edgeList;}
+	public void setEdgeList(List<Edge> edgeList){this.edgeList = edgeList;}
+
 	
 	public Maze()
 	{
@@ -35,7 +46,30 @@ public class Maze
 	{
 		setWidth(width);
 		setHeight(height);
-	}		
+		setCellList(new ArrayList<Cell>());
+		generateCellList();
+		setEdgeList(new ArrayList<Edge>());
+	}	
+	
+	public int size()
+	{
+		return getWidth() * getHeight();
+	}
+	
+	public void generateCellList()
+	{
+		for(int i = 0; i < size(); ++i)
+		{
+			int x = i % getWidth();
+			int y = i / getHeight();
+			getCellList().add(new Cell(x, y));
+		}
+	}
+	
+	public void generateEdgeList()
+	{
+		setEdgeList(getAlgorithm().carveMaze(this));
+	}
 		
 	@Override
 	public String toString()

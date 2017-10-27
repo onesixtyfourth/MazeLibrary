@@ -20,6 +20,12 @@ public class Edge
 	}
 	
 	@Override
+	public String toString()
+	{
+		return String.format("Left Cell : [%s], Right Cell : [%s]", getLeft(), getRight());
+	}
+	
+	@Override
 	public boolean equals(Object obj)
 	{
 		boolean equal = false;
