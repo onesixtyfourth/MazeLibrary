@@ -27,26 +27,26 @@ public class PrimsAlgorithm implements MazeAlgorithm
 			switch (i)
 			{
 				case 0:
-				if(index - maze.getWidth() > 0 && index - maze.getWidth() < maze.size())
+				if(index - maze.getWidth() >= 0 && index - maze.getWidth() < maze.size())
 				{
 					toCheck = maze.getCellList().get(index - maze.getWidth());
 					break;
 				}
 					
 				case 1:
-				if (index + 1 > 0 && index + 1 < maze.size())
+				if (index + 1 >= 0 && index + 1 < maze.size())
 				{
 					toCheck = maze.getCellList().get(index + 1);
 					break;
 				}
 				case 2:
-				if (index + maze.getWidth() > 0 && index + maze.getWidth() < maze.size())
+				if (index + maze.getWidth() >= 0 && index + maze.getWidth() < maze.size())
 				{
 					toCheck = maze.getCellList().get(index + maze.getWidth());
 					break;
 				}
 				case 3:
-				if (index - 1 > 0 && index - 1 < maze.size())
+				if (index - 1 >= 0 && index - 1 < maze.size())
 				{
 					toCheck = maze.getCellList().get(index - 1);
 					break;
@@ -67,15 +67,14 @@ public class PrimsAlgorithm implements MazeAlgorithm
 	{
 		this.maze = maze;
 		List<Edge> edges = new ArrayList<Edge>();
-		Random random = new Random(System.currentTimeMillis());	
-		
+		Random random = new Random(System.currentTimeMillis());			
 		Cell currentCell = maze.getCellList().get(random.nextInt(maze.size()));		
 		currentCell.setState(CellState.IN);
-		Cell nextCell = null;
+		Cell nextCell = null;		
 		
-		
-		
-		while(maze.getCellList().stream().anyMatch(s -> s.getState() == CellState.FRONTIER && s.getState() == CellState.OUT))
+		while(maze.getCellList()
+					.stream()
+					.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
 		{
 			List<Cell> neighbours = getNeighbours(currentCell);	
 			if(neighbours.size() > 0)
@@ -84,25 +83,27 @@ public class PrimsAlgorithm implements MazeAlgorithm
 				edges.add(new Edge(currentCell, nextCell));
 				
 				nextCell.setState(CellState.IN);
-				currentCell.setState(CellState.IN);
 				currentCell = nextCell;
 			}
 			else
 			{
-				//TODO backtrack
-				
 				for(int i = edges.size() - 1; i >= 0; --i)
 				{
 					Edge edge = edges.get(i);
-					if(edge.getRight().equals(currentCell) && !edge.getLeft().equals(currentCell))
+
+					if(!getNeighbours(edge.getRight()).isEmpty())
+					{
+						currentCell = edge.getRight();
+						break;//TODO breaking only allows one edge to be checked
+					}
+					else if(!getNeighbours(edge.getLeft()).isEmpty())
 					{
 						currentCell = edge.getLeft();
+						break;//TODO breaking only allows one edge to be checked
 					}
 				}
 			}
 		}
 		return edges;
 	}	
-	
-	
 }

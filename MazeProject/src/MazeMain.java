@@ -9,7 +9,8 @@ public class MazeMain
 		maze.setAlgorithm(new PrimsAlgorithm());		
 		maze.generateEdgeList();
 		
-//		System.out.println(maze.toString() + System.lineSeparator() + maze.getAlgorithm().getAlgorithmName());
+		System.out.println(maze.toString() + System.lineSeparator() + maze.getAlgorithm().getAlgorithmName());
+		System.out.println(maze.getCellList());
 		System.out.println(maze.getEdgeList());
 	}
 }

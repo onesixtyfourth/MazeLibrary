@@ -1,13 +1,12 @@
 package uk.co.glasys.tests;
 
-import static org.junit.Assert.*;
-
-import java.util.Objects;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import uk.co.glasys.Maze;
 import uk.co.glasys.Cell.CellState;
+import uk.co.glasys.Maze;
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 import uk.co.glasys.mazealgorithms.PrimsAlgorithm;
 
@@ -28,7 +27,9 @@ public class AlgorithmTests
 		maze.setAlgorithm(new PrimsAlgorithm());
 		maze.generateEdgeList();
 		
-		assertTrue(maze.getCellList().stream().anyMatch(c -> c.getState() != CellState.OUT || c.getState() != CellState.FRONTIER));
+		assertFalse(maze.getCellList()
+				.stream()
+				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 		
 	}
 
