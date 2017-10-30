@@ -7,7 +7,7 @@ public class MazeMain
 {
 	public static void main(String [] args)
 	{
-		Maze maze = new Maze(15);
+		Maze maze = new Maze(10);
 		maze.setAlgorithm(new PrimsAlgorithm());		
 		maze.generateEdgeList();
 		
@@ -17,6 +17,5 @@ public class MazeMain
 		
 		IDrawMazes drawMaze = new ConsoleDraw(maze);
 		drawMaze.drawMaze();
-		
 	}
 }

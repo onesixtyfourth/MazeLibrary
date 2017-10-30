@@ -68,5 +68,7 @@ public class ConsoleDraw implements IDrawMazes
 				
 			} 
 		}		
+		System.out.println();
+		System.out.println(maze.toString());
 	}
 }
