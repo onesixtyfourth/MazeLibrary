@@ -1,11 +1,14 @@
 package uk.co.glasys.tests;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Maze;
+import uk.co.glasys.mazealgorithms.PrimsAlgorithm;
 
 public class MazeTests
 {
@@ -39,5 +42,38 @@ public class MazeTests
 		assertNotNull(maze.getEdgeList());
 	}	
 		
+	@Test
+	public void testResetMaze()
+	{
+		Maze maze = new Maze();
+		maze.setAlgorithm(new PrimsAlgorithm());		
+		maze.generateEdgeList();
+		maze.resetMaze();
+		assertTrue(maze.getEdgeList().isEmpty());
+		assertTrue(maze.getCellList().stream().allMatch(c -> c.getState().equals(CellState.OUT)));
+	}
+	
+	@Test
+	public void testCellGeneration()
+	{
+		Maze maze = new Maze();
+		assertTrue(maze.getCellList().size() == maze.size());
+	}
+	
+	@Test
+	public void testEdgeListGeneration()
+	{
+		Maze maze = new Maze();
+		maze.setAlgorithm(new PrimsAlgorithm());		
+		maze.generateEdgeList();
+		assertFalse(maze.getEdgeList().isEmpty());
+	}
+	
+	@Test
+	public void testSize()
+	{
+		Maze maze = new Maze();
+		assertTrue(maze.size() == 100);
+	}
 	
 }

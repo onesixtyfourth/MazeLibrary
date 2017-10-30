@@ -1,10 +1,11 @@
 package uk.co.glasys.tests;
 
-import uk.co.glasys.Cell;
-import uk.co.glasys.Edge;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import uk.co.glasys.Cell;
+import uk.co.glasys.Edge;
 
 public class EdgeTests
 {

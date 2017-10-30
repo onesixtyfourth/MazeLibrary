@@ -59,6 +59,7 @@ public class Maze
 	
 	public void generateCellList()
 	{
+		getCellList().clear();		
 		for(int i = 0; i < size(); ++i)
 		{
 			int x = i % getWidth();
@@ -69,13 +70,31 @@ public class Maze
 	
 	public void generateEdgeList()
 	{
-		setEdgeList(getAlgorithm().carveMaze(this));
+		setEdgeList(getAlgorithm().carve(this));
 	}
 	
 	public void resetMaze()
 	{
 		getEdgeList().clear();
 		getCellList().forEach(l -> l.setState(CellState.OUT));
+	}
+	
+	public List<Cell> getConnectedCells(Cell cell)
+	{
+		List<Cell> cellList = new ArrayList<Cell>();
+		
+		getEdgeList().forEach(item ->
+		{
+			if(item.getLeft().equals(cell))
+			{
+				cellList.add(item.getRight());
+			}
+			else if(item.getRight().equals(cell))
+			{
+				cellList.add(item.getLeft());
+			}
+		});
+		return cellList;		
 	}
 		
 	@Override

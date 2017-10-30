@@ -13,7 +13,7 @@ public interface MazeAlgorithm
 	 * 
 	 * @return A list of edges that represent the path through the maze.
 	 */
-	abstract List<Edge> carveMaze(Maze maze);
+	abstract List<Edge> carve(Maze maze);
 	
 	/**
 	 * Get the neighbours of the current {@link}Cell

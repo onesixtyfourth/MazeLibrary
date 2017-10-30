@@ -28,7 +28,7 @@ public class Cell
 	
 	
 	public static enum CellState
-	{
+	{//TODO find somewhere better to put this.
 		IN, OUT, FRONTIER
 	}
 	
@@ -50,7 +50,7 @@ public class Cell
 	@Override
 	public String toString()
 	{
-		return String.format("X = %d, Y = %d, Sides = %d, State = %s%n", 
+		return String.format("X = %d, Y = %d, Sides = %d, State = %s", 
 							getX(), getY(), getNumberOfSides(), getState());
 	}
 	

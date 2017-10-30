@@ -26,7 +26,7 @@ public class PrimsAlgorithm implements MazeAlgorithm
 			Cell toCheck = null;
 			
 			switch (i)
-			{
+			{//TODO need to check if the two cells in the same row
 				case 0:
 				if(index - maze.getWidth() >= 0 && index - maze.getWidth() < maze.size())
 				{
@@ -35,7 +35,8 @@ public class PrimsAlgorithm implements MazeAlgorithm
 				}
 					
 				case 1:
-				if (index + 1 >= 0 && index + 1 < maze.size())
+				if (index + 1 >= 0 && index + 1 < maze.size() &&
+						 maze.getCellList().get(index + 1).getY() ==  maze.getCellList().get(index).getY())
 				{
 					toCheck = maze.getCellList().get(index + 1);
 					break;
@@ -47,7 +48,8 @@ public class PrimsAlgorithm implements MazeAlgorithm
 					break;
 				}
 				case 3:
-				if (index - 1 >= 0 && index - 1 < maze.size())
+				if (index - 1 >= 0 && index - 1 < maze.size() &&
+						 maze.getCellList().get(index - 1).getY() ==  maze.getCellList().get(index).getY())
 				{
 					toCheck = maze.getCellList().get(index - 1);
 					break;
@@ -64,7 +66,7 @@ public class PrimsAlgorithm implements MazeAlgorithm
 	}
 	
 	@Override
-	public List<Edge> carveMaze(Maze maze)
+	public List<Edge> carve(Maze maze)
 	{
 		this.maze = maze;
 		List<Edge> edges = new ArrayList<Edge>();

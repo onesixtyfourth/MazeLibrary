@@ -22,7 +22,7 @@ public class Edge
 	@Override
 	public String toString()
 	{
-		return String.format("Left Cell : [%s], Right Cell : [%s]", getLeft(), getRight());
+		return String.format("Left Cell : [%s], Right Cell : [%s]%n", getLeft(), getRight());
 	}
 	
 	@Override
