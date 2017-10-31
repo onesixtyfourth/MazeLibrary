@@ -5,7 +5,7 @@ import java.util.List;
 import uk.co.glasys.Cell;
 import uk.co.glasys.Maze;
 
-public class ConsoleDraw implements IDrawMazes
+public class ConsoleDraw implements MazeDrawer
 {
 	private Maze maze;
 	
@@ -20,25 +20,25 @@ public class ConsoleDraw implements IDrawMazes
 		this.maze = maze;
 	}
 	
-	/* (non-Javadoc)
-	 * @see uk.co.glasys.util.IDrawMazes#drawMaze()
-	 */
+	
 	@Override
 	public void drawMaze()
 	{
+		StringBuilder row = new StringBuilder();
 		for(int i = 0; i < maze.getWidth(); ++i)
 		{
-			System.out.print(String.format(" %s", horizontalLine));
+			row.append(String.format(" %s", horizontalLine));
 		}
+		System.out.println(row);
+		row.setLength(0);
 		
 		for (int i = 0; i < maze.getHeight(); ++i)
 		{
-			System.out.println();
 			for (int j = 0; j < maze.getWidth(); ++j)
 			{
 				if (j == 0)
 				{
-					System.out.print(verticalLine);
+					row.append(verticalLine);
 				}
 				
 				int currentIndex = i * maze.getHeight() + j;				
@@ -47,26 +47,27 @@ public class ConsoleDraw implements IDrawMazes
 				if(currentIndex + maze.getWidth() < maze.size() &&
 						cells.contains(maze.getCellList().get(currentIndex + maze.getWidth())))
 				{
-					System.out.print(invisibleHorizontalLine);
+					row.append(invisibleHorizontalLine);
 				}
 				else
 				{
-					System.out.print(horizontalLine);
+					row.append(horizontalLine);
 					
 				}
 
 				if( currentIndex + 1 < maze.size() &&
 						cells.contains(maze.getCellList().get(currentIndex + 1)))
 				{
-					System.out.print(invisibleVerticalLine);
+					row.append(invisibleVerticalLine);
 				}
 				else
 				{
-					System.out.print(verticalLine);
+					row.append(verticalLine);
 					
 				}
-				
 			} 
+			System.out.println(row);
+			row.setLength(0);
 		}		
 		System.out.println();
 		System.out.println(maze.toString());

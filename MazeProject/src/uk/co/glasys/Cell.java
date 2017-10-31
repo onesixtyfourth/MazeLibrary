@@ -50,7 +50,7 @@ public class Cell
 	@Override
 	public String toString()
 	{
-		return String.format("X = %d, Y = %d, Sides = %d, State = %s", 
+		return String.format("X: %d, Y: %d, Sides:  %d, State: %s", 
 							getX(), getY(), getNumberOfSides(), getState());
 	}
 	

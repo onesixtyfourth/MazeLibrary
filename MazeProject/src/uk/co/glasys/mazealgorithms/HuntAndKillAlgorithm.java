@@ -4,17 +4,49 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import uk.co.glasys.Cell;
-import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
 import uk.co.glasys.Maze;
+import uk.co.glasys.Cell.CellState;
 
-
-public class PrimsAlgorithm implements MazeAlgorithm
+public class HuntAndKillAlgorithm implements MazeAlgorithm
 {
+
 	private Maze maze;
-	
+
+	@Override
+	public List<Edge> carve(Maze maze)
+	{
+		this.maze = maze;
+		List<Edge> edges = new ArrayList<Edge>();
+		Random random = new Random(System.currentTimeMillis());			
+		Cell currentCell = maze.getCellList().get(random.nextInt(maze.size()));		
+		currentCell.setState(CellState.IN);
+		Cell nextCell = null;
+		
+		while(maze.getCellList()
+				.stream()
+				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
+		{
+			List<Cell> neighbours = getNeighbours(currentCell);	
+			if(neighbours.size() > 0)
+			{
+				nextCell = neighbours.get(random.nextInt(neighbours.size()));
+				edges.add(new Edge(currentCell, nextCell));
+				
+				nextCell.setState(CellState.IN);
+				currentCell = nextCell;
+			}
+			else
+			{
+				currentCell = huntForNext();
+			}
+		}
+		return edges;
+	}	
+
 	@Override
 	public List<Cell> getNeighbours(Cell cell)
 	{
@@ -65,66 +97,35 @@ public class PrimsAlgorithm implements MazeAlgorithm
 		return neighbours;
 	}
 	
-	@Override
-	public List<Edge> carve(Maze maze)
+	private Cell huntForNext()
 	{
-		this.maze = maze;
-		List<Edge> edges = new ArrayList<Edge>();
-		Random random = new Random(System.currentTimeMillis());			
-		Cell currentCell = maze.getCellList().get(random.nextInt(maze.size()));		
-		currentCell.setState(CellState.IN);
-		Cell nextCell = null;		
+		Cell next = null;
 		
-		while(maze.getCellList()
-					.stream()
-					.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
-		{
-			List<Cell> neighbours = getNeighbours(currentCell);	
-			if(neighbours.size() > 0)
+		search:{
+			for (int i = 0; i < maze.getHeight(); ++i)
 			{
-				nextCell = neighbours.get(random.nextInt(neighbours.size()));
-				edges.add(new Edge(currentCell, nextCell));
+				final int rowIndex = i;
+							
+				List<Cell> cells = maze.getCellList()
+						.stream()
+						.filter(c -> c.getY() == rowIndex)
+						.collect(Collectors.toList());
 				
-				nextCell.setState(CellState.IN);
-				currentCell = nextCell;
-			}
-			else
-			{//TODO this is supposed to be backtracking but it reverses through the cell list.
-			 //It should be working backwards from the current cell
-				for(int i = edges.size() - 1; i >= 0; --i)
+				for (Cell cell : cells)
 				{
-					Edge edge = edges.get(i);
-
-					if(!getNeighbours(edge.getRight()).isEmpty())
+					if(!cell.getState().equals(CellState.IN) && 
+							getNeighbours(cell).stream()
+												.anyMatch(c -> c.getState()
+												.equals(CellState.OUT) || c.getState().equals(CellState.FRONTIER)))
 					{
-						currentCell = edge.getRight();
-						break;
+						next = cell;
+						break search;
 					}
-					else if(!getNeighbours(edge.getLeft()).isEmpty())
-					{
-						currentCell = edge.getLeft();
-						break;
-					}
+					
 				}
 			}
 		}
-		return edges;
-	}	
-	
-	@Override
-	public boolean equals(Object obj)
-	{
-		boolean equal = false;
-		if(Objects.nonNull(obj) && this == obj)
-		{
-			equal = true;
-		}
-		return equal;
+		return next;
 	}
-	
-	@Override
-	public int hashCode()
-	{
-		return Objects.hash(maze.hashCode());
-	}
+
 }

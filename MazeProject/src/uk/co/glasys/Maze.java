@@ -100,7 +100,7 @@ public class Maze
 	@Override
 	public String toString()
 	{
-		return String.format("Width : %d, Height : %d, Algorithm Name : %s", 
+		return String.format("Width: %d, Height: %d, Algorithm Name: %s", 
 						getWidth(), getHeight(), getAlgorithm().getAlgorithmName());
 	}
 	

@@ -1,6 +1,6 @@
 package uk.co.glasys.util;
 
-public interface IDrawMazes
+public interface MazeDrawer
 {
 	void drawMaze();
 }
