@@ -14,9 +14,64 @@ import uk.co.glasys.Maze;
 public class PrimsAlgorithm implements MazeAlgorithm
 {
 	private Maze maze;
+	private List<Edge> edges;
 	
 	@Override
-	public List<Cell> getNeighbours(Cell cell)
+	public List<Edge> carve(Maze maze)
+	{
+		this.maze = maze;
+		edges = new ArrayList<Edge>();
+		Random random = new Random(System.currentTimeMillis());			
+		Cell currentCell = maze.getCellList().get(random.nextInt(maze.size()));		
+		currentCell.setState(CellState.IN);
+		Cell nextCell = null;		
+		
+		while(maze.getCellList()
+					.stream()
+					.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
+		{
+			List<Cell> neighbours = getNeighbours(currentCell);	
+			if(neighbours.size() > 0)
+			{
+				nextCell = neighbours.get(random.nextInt(neighbours.size()));
+				edges.add(new Edge(currentCell, nextCell));
+				
+				nextCell.setState(CellState.IN);
+				currentCell = nextCell;
+			}
+			else
+			{
+				currentCell = backTrack(currentCell);
+			}
+		}
+		return edges;
+	}	
+	
+	//TODO check this is actually correctly backtracking. It should be as the reverse order of the edges
+	//will reflect the paths creation so far. If it isn't I will have to trace the path backwards.
+	private Cell backTrack(Cell cell)
+	{
+		Cell next = null;
+		
+		for(int i = edges.size() - 1; i >= 0; --i)
+		{
+			Edge edge = edges.get(i);
+
+			if(!edge.getRight().equals(cell) && !getNeighbours(edge.getRight()).isEmpty())
+			{
+				next = edge.getRight();
+				break;
+			}
+			else if(!edge.getLeft().equals(cell) &&!getNeighbours(edge.getLeft()).isEmpty())
+			{
+				next = edge.getLeft();
+				break;
+			}
+		}
+		return next;
+	}
+	
+	private List<Cell> getNeighbours(Cell cell)
 	{
 		List<Cell> neighbours = new ArrayList<Cell>();
 
@@ -64,52 +119,6 @@ public class PrimsAlgorithm implements MazeAlgorithm
 		}
 		return neighbours;
 	}
-	
-	@Override
-	public List<Edge> carve(Maze maze)
-	{
-		this.maze = maze;
-		List<Edge> edges = new ArrayList<Edge>();
-		Random random = new Random(System.currentTimeMillis());			
-		Cell currentCell = maze.getCellList().get(random.nextInt(maze.size()));		
-		currentCell.setState(CellState.IN);
-		Cell nextCell = null;		
-		
-		while(maze.getCellList()
-					.stream()
-					.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
-		{
-			List<Cell> neighbours = getNeighbours(currentCell);	
-			if(neighbours.size() > 0)
-			{
-				nextCell = neighbours.get(random.nextInt(neighbours.size()));
-				edges.add(new Edge(currentCell, nextCell));
-				
-				nextCell.setState(CellState.IN);
-				currentCell = nextCell;
-			}
-			else
-			{//TODO this is supposed to be backtracking but it reverses through the cell list.
-			 //It should be working backwards from the current cell
-				for(int i = edges.size() - 1; i >= 0; --i)
-				{
-					Edge edge = edges.get(i);
-
-					if(!getNeighbours(edge.getRight()).isEmpty())
-					{
-						currentCell = edge.getRight();
-						break;
-					}
-					else if(!getNeighbours(edge.getLeft()).isEmpty())
-					{
-						currentCell = edge.getLeft();
-						break;
-					}
-				}
-			}
-		}
-		return edges;
-	}	
 	
 	@Override
 	public boolean equals(Object obj)

@@ -45,5 +45,31 @@ public class AlgorithmTests
 				.stream()
 				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 	}
+	
+	@Test
+	public void testResetMaze()
+	{
+		Maze maze = new Maze();
+		MazeAlgorithm algorithm = new PrimsAlgorithm();
+		maze.setAlgorithm(algorithm);
+		maze.generateEdgeList();
+		
+		assertFalse(maze.getCellList()
+				.stream()
+				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
+		assertEquals("Prims", algorithm.getAlgorithmName());
+		
+		algorithm = new HuntAndKillAlgorithm();
+		maze.setAlgorithm(algorithm);
+		maze.resetMaze();
+		maze.generateEdgeList();
+		
+		assertFalse(maze.getCellList()
+				.stream()
+				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
+		assertEquals("HuntAndKill", algorithm.getAlgorithmName());
+		
+		
+	}
 
 }

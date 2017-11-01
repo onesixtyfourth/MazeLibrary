@@ -15,12 +15,13 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 {
 
 	private Maze maze;
+	List<Edge> edges;
 
 	@Override
 	public List<Edge> carve(Maze maze)
 	{
 		this.maze = maze;
-		List<Edge> edges = new ArrayList<Edge>();
+		edges = new ArrayList<Edge>();
 		Random random = new Random(System.currentTimeMillis());			
 		Cell currentCell = maze.getCellList().get(random.nextInt(maze.size()));		
 		currentCell.setState(CellState.IN);
@@ -28,7 +29,7 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 		
 		while(maze.getCellList()
 				.stream()
-				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
+				.anyMatch(s -> s.getState() != CellState.IN))
 		{
 			List<Cell> neighbours = getNeighbours(currentCell);	
 			if(neighbours.size() > 0)
@@ -47,8 +48,8 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 		return edges;
 	}	
 
-	@Override
-	public List<Cell> getNeighbours(Cell cell)
+
+	private List<Cell> getNeighbours(Cell cell)
 	{
 		List<Cell> neighbours = new ArrayList<Cell>();
 		if(Objects.nonNull(cell))
@@ -92,13 +93,14 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 				if(Objects.nonNull(toCheck) && toCheck.getState() != CellState.IN && !neighbours.contains(toCheck) )
 				{
 					neighbours.add(toCheck);
-					toCheck.setState(CellState.FRONTIER);
 				}
 			}
 		}
 		return neighbours;
 	}
 	
+	
+	//Occasionally produces islands need to fix. May have fixed now need to test.
 	private Cell huntForNext()
 	{
 		Cell next = null;
@@ -117,13 +119,24 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 				{
 					if(getNeighbours(cell).stream()
 										.anyMatch(c -> c.getState()
-										.equals(CellState.OUT) || c.getState().equals(CellState.FRONTIER)))
-			{
+										.equals(CellState.OUT)))
+					{
 						next = cell;
 						break search;
 					}
 					
 				}
+			}
+			
+			List<Cell> neighbours = getNeighbours(next).stream()
+														.filter(c -> c.getState().equals(CellState.FRONTIER))
+														.collect(Collectors.toList());
+			if(!neighbours.isEmpty())
+			{
+				Cell inPath = neighbours.get(0);
+				edges.add(new Edge(next, inPath));
+				next = inPath;
+				next.setState(CellState.IN);
 			}
 		}
 		return next;

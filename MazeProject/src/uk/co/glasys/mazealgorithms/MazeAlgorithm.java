@@ -2,7 +2,6 @@ package uk.co.glasys.mazealgorithms;
 
 import java.util.List;
 
-import uk.co.glasys.Cell;
 import uk.co.glasys.Edge;
 import uk.co.glasys.Maze;
 
@@ -14,14 +13,6 @@ public interface MazeAlgorithm
 	 * @return A list of edges that represent the path through the maze.
 	 */
 	abstract List<Edge> carve(Maze maze);
-	
-	/**
-	 * Get the neighbours of the current {@link}Cell
-	 * 
-	 * @param cell
-	 * @return
-	 */
-	List<Cell> getNeighbours(Cell cell);
 	
 	/**
 	 * Returns a String object that represents the name of the algorithm
