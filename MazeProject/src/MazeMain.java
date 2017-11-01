@@ -7,7 +7,7 @@ public class MazeMain
 {
 	public static void main(String [] args)
 	{
-		Maze maze = new Maze(5);
+		Maze maze = new Maze(20);
 //		maze.setAlgorithm(new HuntAndKillAlgorithm());	
 		
 		
@@ -15,15 +15,16 @@ public class MazeMain
 //		System.out.println(maze.getCellList());
 //		System.out.println(maze.getEdgeList());
 		
-//		maze.setAlgorithm(new PrimsAlgorithm());		
-//		maze.generateEdgeList();
-//		ConsoleDraw draw = new ConsoleDraw(maze);
-//		draw.drawMaze();
+		maze.setAlgorithm(new PrimsAlgorithm());		
+		maze.generateEdgeList();
+		ConsoleDraw draw = new ConsoleDraw(maze);
+		draw.drawMaze();
 		
 		maze.setAlgorithm(new HuntAndKillAlgorithm());
 		maze.resetMaze();
 		maze.generateEdgeList();
-		ConsoleDraw draw = new ConsoleDraw(maze);
+//		ConsoleDraw 
+		draw = new ConsoleDraw(maze);
 		draw.drawMaze();
 	}
 }

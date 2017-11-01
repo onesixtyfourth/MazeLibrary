@@ -103,7 +103,8 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 	{
 		Cell next = null;
 		
-		search:{
+		search:
+		{
 			for (int i = 0; i < maze.getHeight(); ++i)
 			{
 				final int rowIndex = i;
@@ -115,9 +116,8 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 				
 				for (Cell cell : cells)
 				{
-					if(getNeighbours(cell).stream()
-										.anyMatch(c -> c.getState()
-										.equals(CellState.OUT)))
+					if(cell.getState().equals(CellState.IN) && getNeighbours(cell).stream()
+																.anyMatch(c -> c.getState().equals(CellState.OUT)))
 					{
 						next = cell;
 						break search;
@@ -125,18 +125,19 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 					
 				}
 			}
-			
-			List<Cell> neighbours = getNeighbours(next).stream()
-														.filter(c -> c.getState().equals(CellState.FRONTIER))
-														.collect(Collectors.toList());
-			if(!neighbours.isEmpty())
-			{
-				Cell inPath = neighbours.get(0);
-				edges.add(new Edge(next, inPath));
-				next = inPath;
-				next.setState(CellState.IN);
-			}
 		}
+			
+		List<Cell> neighbours = getNeighbours(next).stream()
+													.filter(c -> c.getState().equals(CellState.OUT))
+													.collect(Collectors.toList());
+		if(!neighbours.isEmpty())
+		{
+			Cell inPath = neighbours.get(0);
+			edges.add(new Edge(next, inPath));
+			next = inPath;
+			next.setState(CellState.IN);
+		}
+		
 		return next;
 	}
 }
