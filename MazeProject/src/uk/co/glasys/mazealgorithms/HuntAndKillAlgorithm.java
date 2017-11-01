@@ -51,47 +51,49 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 	public List<Cell> getNeighbours(Cell cell)
 	{
 		List<Cell> neighbours = new ArrayList<Cell>();
-
-		for(int i = 0; i < cell.getNumberOfSides(); ++i)
-		{//TODO need to accommodate more than four sides
-			int index = maze.getCellList().indexOf(cell);
-			Cell toCheck = null;
-			
-			switch (i)
-			{
-				case 0:
-				if(index - maze.getWidth() >= 0 && index - maze.getWidth() < maze.size())
+		if(Objects.nonNull(cell))
+		{
+			for(int i = 0; i < cell.getNumberOfSides(); ++i)
+			{//TODO need to accommodate more than four sides
+				int index = maze.getCellList().indexOf(cell);
+				Cell toCheck = null;
+				
+				switch (i)
 				{
-					toCheck = maze.getCellList().get(index - maze.getWidth());
-					break;
+					case 0:
+					if(index - maze.getWidth() >= 0 && index - maze.getWidth() < maze.size())
+					{
+						toCheck = maze.getCellList().get(index - maze.getWidth());
+						break;
+					}
+						
+					case 1:
+					if (index + 1 >= 0 && index + 1 < maze.size() &&
+							 maze.getCellList().get(index + 1).getY() ==  maze.getCellList().get(index).getY())
+					{
+						toCheck = maze.getCellList().get(index + 1);
+						break;
+					}
+					case 2:
+					if (index + maze.getWidth() >= 0 && index + maze.getWidth() < maze.size())
+					{
+						toCheck = maze.getCellList().get(index + maze.getWidth());
+						break;
+					}
+					case 3:
+					if (index - 1 >= 0 && index - 1 < maze.size() &&
+							 maze.getCellList().get(index - 1).getY() ==  maze.getCellList().get(index).getY())
+					{
+						toCheck = maze.getCellList().get(index - 1);
+						break;
+					}
 				}
-					
-				case 1:
-				if (index + 1 >= 0 && index + 1 < maze.size() &&
-						 maze.getCellList().get(index + 1).getY() ==  maze.getCellList().get(index).getY())
+				
+				if(Objects.nonNull(toCheck) && toCheck.getState() != CellState.IN && !neighbours.contains(toCheck) )
 				{
-					toCheck = maze.getCellList().get(index + 1);
-					break;
+					neighbours.add(toCheck);
+					toCheck.setState(CellState.FRONTIER);
 				}
-				case 2:
-				if (index + maze.getWidth() >= 0 && index + maze.getWidth() < maze.size())
-				{
-					toCheck = maze.getCellList().get(index + maze.getWidth());
-					break;
-				}
-				case 3:
-				if (index - 1 >= 0 && index - 1 < maze.size() &&
-						 maze.getCellList().get(index - 1).getY() ==  maze.getCellList().get(index).getY())
-				{
-					toCheck = maze.getCellList().get(index - 1);
-					break;
-				}
-			}
-			
-			if(Objects.nonNull(toCheck) && toCheck.getState() != CellState.IN )
-			{
-				neighbours.add(toCheck);
-				toCheck.setState(CellState.FRONTIER);
 			}
 		}
 		return neighbours;
@@ -113,11 +115,10 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 				
 				for (Cell cell : cells)
 				{
-					if(!cell.getState().equals(CellState.IN) && 
-							getNeighbours(cell).stream()
-												.anyMatch(c -> c.getState()
-												.equals(CellState.OUT) || c.getState().equals(CellState.FRONTIER)))
-					{
+					if(getNeighbours(cell).stream()
+										.anyMatch(c -> c.getState()
+										.equals(CellState.OUT) || c.getState().equals(CellState.FRONTIER)))
+			{
 						next = cell;
 						break search;
 					}

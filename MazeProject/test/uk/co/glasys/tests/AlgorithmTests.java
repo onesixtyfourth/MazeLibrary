@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Maze;
+import uk.co.glasys.mazealgorithms.HuntAndKillAlgorithm;
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 import uk.co.glasys.mazealgorithms.PrimsAlgorithm;
 
@@ -21,7 +22,7 @@ public class AlgorithmTests
 	}
 	
 	@Test
-	public void testAllCellsInAfterCarving()
+	public void testAllCellsInAfterCarvingWithPrims()
 	{
 		Maze maze = new Maze();
 		maze.setAlgorithm(new PrimsAlgorithm());
@@ -31,6 +32,18 @@ public class AlgorithmTests
 				.stream()
 				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 		
+	}
+	
+	@Test
+	public void testAllCellsInAfterCarvingWithHuntAndKill()
+	{
+		Maze maze = new Maze();
+		maze.setAlgorithm(new HuntAndKillAlgorithm());
+		maze.generateEdgeList();
+		
+		assertFalse(maze.getCellList()
+				.stream()
+				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 	}
 
 }
