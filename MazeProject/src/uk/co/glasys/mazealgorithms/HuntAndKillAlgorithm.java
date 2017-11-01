@@ -15,7 +15,7 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 {
 
 	private Maze maze;
-	List<Edge> edges;
+	private List<Edge> edges;
 
 	@Override
 	public List<Edge> carve(Maze maze)
@@ -47,7 +47,6 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 		}
 		return edges;
 	}	
-
 
 	private List<Cell> getNeighbours(Cell cell)
 	{
@@ -99,7 +98,6 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 		return neighbours;
 	}
 	
-	
 	//Occasionally produces islands need to fix. May have fixed now need to test.
 	private Cell huntForNext()
 	{
@@ -141,5 +139,4 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 		}
 		return next;
 	}
-
 }
