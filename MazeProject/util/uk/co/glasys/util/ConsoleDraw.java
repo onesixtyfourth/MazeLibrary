@@ -33,7 +33,7 @@ public class ConsoleDraw implements MazeDrawer
 		System.out.println(row);
 		row.setLength(0);
 		
-		for (int i = 0; i < maze.getWidth(); ++i)
+		for (int i = 0; i < maze.getHeight(); ++i)
 		{
 			final int rowIndex = i;
 			List<Cell> cells = maze.getCellList()
@@ -61,6 +61,7 @@ public class ConsoleDraw implements MazeDrawer
 			
 			int cellindex = cell.getY() *  maze.getWidth() + cell.getX();
 			List<Cell> neigbours = maze.getConnectedCells(cell);
+			
 			if(cellindex + maze.getWidth() < maze.size() &&
 					neigbours.contains(maze.getCellList().get(cellindex + maze.getWidth())))
 			{

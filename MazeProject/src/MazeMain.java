@@ -7,8 +7,8 @@ public class MazeMain
 {
 	public static void main(String [] args)
 	{
-		Maze maze = new Maze(15, 15);
-//		maze.setAlgorithm(new HuntAndKillAlgorithm());	
+		Maze maze = new Maze(25, 25);
+		maze.setAlgorithm(new HuntAndKillAlgorithm());	
 		
 		
 //		System.out.println(maze.toString() );
@@ -23,7 +23,6 @@ public class MazeMain
 		maze.setAlgorithm(new HuntAndKillAlgorithm());
 		maze.resetMaze();
 		maze.generateEdgeList();
-//		ConsoleDraw 
 		draw = new ConsoleDraw(maze);
 		draw.drawMaze();
 	}

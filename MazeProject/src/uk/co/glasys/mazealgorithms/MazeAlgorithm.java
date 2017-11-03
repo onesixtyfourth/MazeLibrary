@@ -12,7 +12,7 @@ public interface MazeAlgorithm
 	 * 
 	 * @return A list of edges that represent the path through the maze.
 	 */
-	abstract List<Edge> carve(Maze maze);
+	List<Edge> carve(Maze maze);
 	
 	/**
 	 * Returns a String object that represents the name of the algorithm

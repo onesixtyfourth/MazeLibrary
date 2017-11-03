@@ -63,7 +63,7 @@ public class Maze
 		for(int i = 0; i < size(); ++i)
 		{
 			int x = i % getWidth();
-			int y = i / getHeight();
+			int y = i / getWidth();
 			getCellList().add(new Cell(x, y));
 		}
 	}
