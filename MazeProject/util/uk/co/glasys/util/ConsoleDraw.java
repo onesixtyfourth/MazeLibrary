@@ -1,6 +1,7 @@
 package uk.co.glasys.util;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import uk.co.glasys.Cell;
 import uk.co.glasys.Maze;
@@ -32,44 +33,57 @@ public class ConsoleDraw implements MazeDrawer
 		System.out.println(row);
 		row.setLength(0);
 		
-		for (int i = 0; i < maze.getHeight(); ++i)
+		for (int i = 0; i < maze.getWidth(); ++i)
 		{
-			for (int j = 0; j < maze.getWidth(); ++j)
-			{
-				if (j == 0)
-				{
-					row.append(verticalLine);
-				}
-				
-				int currentIndex = i * maze.getHeight() + j;				
-				List<Cell> cells = maze.getConnectedCells(maze.getCellList().get(currentIndex));
-				
-				if(currentIndex + maze.getWidth() < maze.size() &&
-						cells.contains(maze.getCellList().get(currentIndex + maze.getWidth())))
-				{
-					row.append(invisibleHorizontalLine);
-				}
-				else
-				{
-					row.append(horizontalLine);
-					
-				}
+			final int rowIndex = i;
+			List<Cell> cells = maze.getCellList()
+					.stream()
+					.filter(c -> c.getY() == rowIndex)
+					.collect(Collectors.toList());
 
-				if( currentIndex + 1 < maze.size() &&
-						cells.contains(maze.getCellList().get(currentIndex + 1)))
-				{
-					row.append(invisibleVerticalLine);
-				}
-				else
-				{
-					row.append(verticalLine);
-					
-				}
-			} 
-			System.out.println(row);
+			System.out.println(drawRow(cells));
 			row.setLength(0);
 		}		
 		System.out.println();
 		System.out.println(maze.toString());
+	}
+	
+	private String drawRow(List<Cell> cells)
+	{
+		StringBuilder row = new StringBuilder();
+		
+		for(Cell cell : cells)
+		{
+			if(cell.getX() == 0)
+			{
+				row.append(verticalLine);
+			}
+			
+			int cellindex = cell.getY() *  maze.getWidth() + cell.getX();
+			List<Cell> neigbours = maze.getConnectedCells(cell);
+			if(cellindex + maze.getWidth() < maze.size() &&
+					neigbours.contains(maze.getCellList().get(cellindex + maze.getWidth())))
+			{
+				row.append(invisibleHorizontalLine);
+			}
+			else
+			{
+				row.append(horizontalLine);
+				
+			}
+
+			if( cellindex + 1 < maze.size() &&
+					neigbours.contains(maze.getCellList().get(cellindex + 1)))
+			{
+				row.append(invisibleVerticalLine);
+			}
+			else
+			{
+				row.append(verticalLine);
+				
+			}
+			
+		}
+		return row.toString();
 	}
 }

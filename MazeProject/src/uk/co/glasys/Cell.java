@@ -26,7 +26,6 @@ public class Cell
 		return state;
 	}
 	
-	
 	public static enum CellState
 	{//TODO find somewhere better to put this.
 		IN, OUT, FRONTIER

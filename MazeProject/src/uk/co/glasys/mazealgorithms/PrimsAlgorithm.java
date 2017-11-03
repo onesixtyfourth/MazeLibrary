@@ -57,14 +57,14 @@ public class PrimsAlgorithm implements MazeAlgorithm
 		{
 			Edge edge = edges.get(i);
 
-			if(!edge.getRight().equals(cell) && !getNeighbours(edge.getRight()).isEmpty())
+			if(!edge.getTo().equals(cell) && !getNeighbours(edge.getTo()).isEmpty())
 			{
-				next = edge.getRight();
+				next = edge.getTo();
 				break;
 			}
-			else if(!edge.getLeft().equals(cell) &&!getNeighbours(edge.getLeft()).isEmpty())
+			else if(!edge.getFrom().equals(cell) &&!getNeighbours(edge.getFrom()).isEmpty())
 			{
-				next = edge.getLeft();
+				next = edge.getFrom();
 				break;
 			}
 		}

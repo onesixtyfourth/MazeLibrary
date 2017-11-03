@@ -85,17 +85,32 @@ public class Maze
 		
 		getEdgeList().forEach(item ->
 		{
-			if(item.getLeft().equals(cell))
+			if(item.getFrom().equals(cell))
 			{
-				cellList.add(item.getRight());
+				cellList.add(item.getTo());
 			}
-			else if(item.getRight().equals(cell))
+			else if(item.getTo().equals(cell))
 			{
-				cellList.add(item.getLeft());
+				cellList.add(item.getFrom());
 			}
 		});
 		return cellList;		
 	}
+	
+//	public boolean areConnected(Cell from, Cell to)
+//	{
+//		boolean result = false;
+//		
+//		getEdgeList().forEach(item ->
+//		{
+//			if(item.getFrom().equals(from) && item.getTo().equals(to))
+//			{
+//				result = true;
+//			}
+//		});
+//		
+//		return result;
+//	}
 		
 	@Override
 	public String toString()

@@ -7,7 +7,7 @@ public class MazeMain
 {
 	public static void main(String [] args)
 	{
-		Maze maze = new Maze(20);
+		Maze maze = new Maze(15, 15);
 //		maze.setAlgorithm(new HuntAndKillAlgorithm());	
 		
 		

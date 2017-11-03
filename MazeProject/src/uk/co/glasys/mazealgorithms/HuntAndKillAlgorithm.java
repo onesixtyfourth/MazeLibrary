@@ -98,7 +98,6 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 		return neighbours;
 	}
 	
-	//Occasionally produces islands need to fix. May have fixed now need to test.
 	private Cell huntForNext()
 	{
 		Cell next = null;

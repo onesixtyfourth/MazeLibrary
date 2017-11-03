@@ -17,7 +17,7 @@ public class EdgeTests
 		Cell rightCell = new Cell(5, 6);
 		Edge edge = new Edge(leftCell, rightCell);
 		
-		assertTrue(edge.getLeft().equals(leftCell) && edge.getRight().equals(rightCell));
+		assertTrue(edge.getFrom().equals(leftCell) && edge.getTo().equals(rightCell));
 	}
 	
 	@Test

@@ -4,25 +4,25 @@ import java.util.Objects;
 
 public class Edge
 {
-	private Cell left;
-	public Cell getLeft(){return left;}
-	public void setLeft(Cell left){this.left = left;}
+	private Cell from;
+	public Cell getFrom(){return from;}
+	public void setFrom(Cell from){this.from = from;}
 	
-	private Cell right;
-	public Cell getRight(){return right;}
-	public void setRight(Cell right){this.right = right;}	
+	private Cell to;
+	public Cell getTo(){return to;}
+	public void setTo(Cell to){this.to = to;}	
 	
 
-	public Edge(Cell left, Cell right)
+	public Edge(Cell from, Cell to)
 	{
-		setLeft(left);
-		setRight(right);
+		setFrom(from);
+		setTo(to);
 	}
 	
 	@Override
 	public String toString()
 	{
-		return String.format("Left Cell: [%s], Right Cell: [%s]%n", getLeft(), getRight());
+		return String.format("Left Cell: [%s], Right Cell: [%s]%n", getFrom(), getTo());
 	}
 	
 	@Override
@@ -36,8 +36,8 @@ public class Edge
 		}
 		else if(obj instanceof Edge)
 		{			
-			if(this.getLeft().equals(((Edge)obj).getLeft()) 
-					&& this.getRight().equals(((Edge)obj).getRight()))
+			if(this.getFrom().equals(((Edge)obj).getFrom()) 
+					&& this.getTo().equals(((Edge)obj).getTo()))
 			{
 				equal = true;
 			}
@@ -48,6 +48,8 @@ public class Edge
 	@Override
 	public int hashCode()
 	{		
-		return Objects.hash(getLeft(), getRight());
+		return Objects.hash(getFrom(), getTo());
 	}
+	
+	
 }

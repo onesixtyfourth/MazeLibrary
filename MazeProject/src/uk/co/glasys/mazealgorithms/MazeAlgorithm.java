@@ -19,7 +19,7 @@ public interface MazeAlgorithm
 	 * created. This requires the class to be named so that the Class name consists
 	 * of the algorithm name followed by the word Algorithm.
 	 * 
-	 * @return The name of the algorithm that is used to carve the maze.
+	 * @return The name of the algorithm that this class represents.
 	 */
 	public default String getAlgorithmName()
 	{
