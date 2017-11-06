@@ -11,9 +11,9 @@ public class MazeMain
 		maze.setAlgorithm(new HuntAndKillAlgorithm());	
 		
 //		
-		System.out.println(maze.toString() );
-		System.out.println(maze.getCellList());
-		System.out.println(maze.getEdgeList());
+//		System.out.println(maze.toString() );
+//		System.out.println(maze.getCellList());
+//		System.out.println(maze.getEdgeList());
 		
 		maze.setAlgorithm(new PrimsAlgorithm());		
 		maze.generateEdgeList();
