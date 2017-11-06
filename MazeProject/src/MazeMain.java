@@ -10,10 +10,10 @@ public class MazeMain
 		Maze maze = new Maze(15, 15);
 		maze.setAlgorithm(new HuntAndKillAlgorithm());	
 		
-		
-		System.out.println(maze.toString() );
-		System.out.println(maze.getCellList());
-		System.out.println(maze.getEdgeList());
+//		
+//		System.out.println(maze.toString() );
+//		System.out.println(maze.getCellList());
+//		System.out.println(maze.getEdgeList());
 		
 		maze.setAlgorithm(new PrimsAlgorithm());		
 		maze.generateEdgeList();
