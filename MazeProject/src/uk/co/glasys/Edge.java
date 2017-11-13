@@ -19,6 +19,18 @@ public class Edge
 		setTo(to);
 	}
 	
+	public boolean containsCell(Cell cell)
+	{
+		boolean result = false;
+		
+		if(from.equals(cell) || to.equals(cell))
+		{
+			result = true;
+		}
+		
+		return result;
+	}
+	
 	@Override
 	public String toString()
 	{
