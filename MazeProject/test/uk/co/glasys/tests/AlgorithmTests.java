@@ -2,12 +2,15 @@ package uk.co.glasys.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import uk.co.glasys.Cell;
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Maze;
 import uk.co.glasys.mazealgorithms.HuntAndKillAlgorithm;
+import uk.co.glasys.mazealgorithms.KruskalsAlgorithm;
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 import uk.co.glasys.mazealgorithms.PrimsAlgorithm;
 
@@ -44,6 +47,19 @@ public class AlgorithmTests
 		assertFalse(maze.getCellList()
 							.stream()
 							.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
+	}
+	
+	@Test
+	public void testKruskalsCarveMethod()
+	{
+		Maze maze = new Maze();
+		maze.setAlgorithm(new KruskalsAlgorithm());
+		maze.generateEdgeList();
+		
+		assertFalse(maze.getCellList()
+				.stream()
+				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
+		
 	}
 	
 	@Test

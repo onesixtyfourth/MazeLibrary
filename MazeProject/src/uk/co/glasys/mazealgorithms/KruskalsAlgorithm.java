@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import uk.co.glasys.Cell;
+import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
 import uk.co.glasys.Maze;
 
@@ -52,13 +53,14 @@ public class KruskalsAlgorithm implements MazeAlgorithm
 				{
 					if(canCellsConnect(cell, connecting))
 					{
+						cell.setState(CellState.IN);
+						connecting.setState(CellState.IN);
 						edges.add(new Edge(cell, connecting));
 						break done;
 					}
 				}
 			}
 		}
-		
 		path.addAll(connect);
 		cells.remove(connect);
 	}

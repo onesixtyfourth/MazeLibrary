@@ -14,16 +14,16 @@ public class MazeMain
 //		System.out.println(maze.getCellList());
 //		System.out.println(maze.getEdgeList());
 		
-		maze.setAlgorithm(new PrimsAlgorithm());		
-		maze.generateEdgeList();		
+//		maze.setAlgorithm(new PrimsAlgorithm());		
+//		maze.generateEdgeList();		
 		ConsoleDraw draw = new ConsoleDraw(maze);
-		draw.drawMaze();
-		
-		maze.setAlgorithm(new HuntAndKillAlgorithm());
-		maze.resetMaze();
-		maze.generateEdgeList();
-		draw = new ConsoleDraw(maze);
-		draw.drawMaze();
+//		draw.drawMaze();
+//		
+//		maze.setAlgorithm(new HuntAndKillAlgorithm());
+//		maze.resetMaze();
+//		maze.generateEdgeList();
+//		draw = new ConsoleDraw(maze);
+//		draw.drawMaze();
 		
 		maze.setAlgorithm(new KruskalsAlgorithm());	
 		maze.resetMaze();
