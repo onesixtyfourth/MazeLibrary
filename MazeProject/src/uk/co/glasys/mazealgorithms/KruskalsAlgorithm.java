@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import uk.co.glasys.Cell;
 import uk.co.glasys.Edge;
@@ -12,98 +11,88 @@ import uk.co.glasys.Maze;
 
 public class KruskalsAlgorithm implements MazeAlgorithm
 {
-
 	private Maze maze;
-	private List<ArrayList<Edge>> edgeSets;
-	private Random random = new Random(System.currentTimeMillis());	
+	private Random random = new Random(System.currentTimeMillis());		
+	private List<Edge> edges = new ArrayList<Edge>();	
+	private List<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell>>();
 
 	@Override
 	public List<Edge> carve(Maze maze)
 	{
 		this.maze = maze;
-		generateInitialEdges();
-	
-		while(edgeSets.size() > 1)
-		{					
-			Collections.shuffle(edgeSets, random);
-			List<Edge> next = edgeSets.get(0);
-			connectPath(next);			
-		}
-		return edgeSets.get(0);
-	}
-	
-	private void connectPath(List<Edge> edgeSet)
-	{
-		Collections.shuffle(edgeSet, random);
-		Edge next = edgeSet.get(0);
-
-		List<Edge> potentials = potentialEdgesToConnect(next);		
+		generateInitialSets();
 		
-		Collections.shuffle(potentials);
-		Edge connect = potentials.get(0);
-		
-		
-		
-//		List<Edge> connectTo = null;		
-		for(List<Edge> pathConnect : edgeSets)
+		while(cells.size() > 1)
 		{
-			if(pathConnect != edgeSet && pathConnect.contains(connect) )
+			Collections.shuffle(cells, random);			
+			List<Cell> neighbours = pathNeighbours(cells.get(0));			
+			Cell chosen = neighbours.get(random.nextInt(neighbours.size()));			
+			List<Cell> selectedPath = new ArrayList<Cell>();
+			
+			for(List<Cell> path : cells)
 			{
-				edgeSet.add(connectEdges(next, connect));
-				edgeSets.remove(pathConnect);
-				edgeSet.addAll(pathConnect);
-//				connectTo = pathConnect;
-				break;
-			}
-		}
-		
-				
-	}
-	
-	private Edge connectEdges(Edge first, Edge second)
-	{
-		Edge edge = null;
-		
-		if(canCellsConnect(first.getFrom(), second.getFrom()))
-		{
-			edge = new Edge(first.getFrom(), second.getFrom());
-		}
-		else if(canCellsConnect(first.getFrom(), second.getTo()))
-		{
-			edge = new Edge(first.getFrom(), second.getTo());
-		}
-		else if(canCellsConnect(first.getTo(), second.getFrom()))
-		{
-			edge = new Edge(first.getTo(), second.getFrom());
-		}
-		else if(canCellsConnect(first.getTo(), second.getTo()))
-		{
-			edge = new Edge(first.getTo(), second.getTo());
-		}
-		
-		return edge;
-	}
-	
-	private List<Edge> potentialEdgesToConnect(Edge edge)
-	{
-		List<Edge> edges = new ArrayList<Edge>();
-		
-		for(ArrayList<Edge> edgeList : edgeSets)
-		{
-			for(Edge e : edgeList)
-			{
-				if(canCellsConnect(edge.getFrom(), e.getFrom()) ||
-						canCellsConnect(edge.getFrom(), e.getTo()) ||
-						canCellsConnect(edge.getTo(), e.getFrom()) ||
-						canCellsConnect(edge.getTo(), e.getTo()))
+				if(!cells.get(0).equals(path) && path.contains(chosen))
 				{
-					edges.add(e);
+					selectedPath = path;
+					break;
 				}
-			}		
+			}
+			connectPaths(cells.get(0), selectedPath);
 		}
 		return edges;
 	}
 	
+	private void connectPaths(List<Cell> path, List<Cell> connect)
+	{
+		done:
+		{
+			for(Cell cell : path)
+			{
+				for(Cell connecting : connect)
+				{
+					if(canCellsConnect(cell, connecting))
+					{
+						edges.add(new Edge(cell, connecting));
+						break done;
+					}
+				}
+			}
+		}
+		
+		path.addAll(connect);
+		cells.remove(connect);
+	}
+	
+	private List<Cell> pathNeighbours(List<Cell> path)
+	{
+		List<Cell> neighbours = new ArrayList<Cell>();
+		for(Cell cell : path)
+		{
+			List<Cell> tmp = getNeighbours(cell);
+			for(Cell possible : tmp)
+			{
+				if(!path.contains(possible) && !neighbours.contains(possible))
+				{
+					neighbours.add(possible);
+				}
+			}
+		}
+		return neighbours;
+	}
+	
+	private List<Cell> getNeighbours(Cell cell)
+	{
+		List<Cell> neighbours = new ArrayList<Cell>();
+		for(Cell nextCell : maze.getCellList())
+		{
+			if(canCellsConnect(cell, nextCell))
+			{
+				neighbours.add(nextCell);
+			}
+		}
+		return neighbours;
+	}
+
 	private boolean canCellsConnect(Cell next, Cell potential)
 	{
 		boolean result = false;
@@ -122,41 +111,13 @@ public class KruskalsAlgorithm implements MazeAlgorithm
 		return result;
 	}
 	
-	private void generateInitialEdges()
+	private void generateInitialSets()
 	{
-		edgeSets = new ArrayList<ArrayList<Edge>>();
-		for(int i = 0; i < maze.getHeight(); ++i)
+		for(Cell cell : maze.getCellList())
 		{
-			final int rowIndex = i;			
-			List<Cell> cells = maze.getCellList()
-					.stream()
-					.filter(c -> c.getY() == rowIndex)
-					.collect(Collectors.toList());
-			
-			for(Cell cell : cells)
-			{
-				if(cell.getX() < maze.getWidth() - 1)
-				{
-					Cell right = maze.getCellList().get(maze.getCellList().indexOf(cell) + 1);
-					createEdge(cell, right);
-				}
-				
-
-				if(cell.getY() < maze.getHeight() - 1)
-				{
-					Cell down = maze.getCellList().get(maze.getCellList().indexOf(cell) + maze.getWidth());
-					createEdge(cell, down);
-				}				
-			}
-			System.out.println(String.format("Finished row %d\n", rowIndex));
+			ArrayList<Cell> tmp = new ArrayList<Cell>();
+			tmp.add(cell);
+			cells.add(tmp);
 		}
-	}	
-	
-	private void createEdge(Cell left, Cell right)
-	{
-		ArrayList<Edge> tmpSet = new ArrayList<Edge>();
-		tmpSet.add(new Edge(left, right));
-		edgeSets.add(tmpSet);
-		System.out.println(String.format("Adding %s|-|%s", left, right));
-	}	
+	}		
 }
