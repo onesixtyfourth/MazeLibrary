@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Maze;
+import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 import uk.co.glasys.mazealgorithms.PrimsAlgorithm;
 
 public class MazeTests
@@ -19,7 +20,7 @@ public class MazeTests
 		Maze maze = new Maze();
 		assertTrue(maze.getWidth() == Maze.getDefaultWidth() && maze.getHeight() == Maze.getDefaultWidth());
 		assertNotNull(maze.getCellList());
-		assertNotNull(maze.getEdgeList());
+//		assertNotNull(maze.getEdgeList());
 	}
 
 	@Test
@@ -29,7 +30,7 @@ public class MazeTests
 		Maze maze = new Maze(size);
 		assertTrue(maze.getWidth() == size && maze.getHeight() == size);
 		assertNotNull(maze.getCellList());
-		assertNotNull(maze.getEdgeList());
+//		assertNotNull(maze.getEdgeList());
 	}
 
 	@Test
@@ -39,17 +40,19 @@ public class MazeTests
 		Maze maze = new Maze(width, height);
 		assertTrue(maze.getWidth() == width && maze.getHeight() == height);
 		assertNotNull(maze.getCellList());
-		assertNotNull(maze.getEdgeList());
+//		assertNotNull(maze.getEdgeList());
 	}	
 		
 	@Test
 	public void testResetMaze()
 	{
 		Maze maze = new Maze();
-		maze.setAlgorithm(new PrimsAlgorithm());		
-		maze.generateEdgeList();
+//		maze.setAlgorithm(new PrimsAlgorithm());		
+//		maze.generateEdgeList();
+		MazeAlgorithm algorithm = new PrimsAlgorithm();
+//		maze.setEdgeList(algorithm.carve(maze));
 		maze.resetMaze();
-		assertTrue(maze.getEdgeList().isEmpty());
+//		assertTrue(maze.getEdgeList().isEmpty());
 		assertTrue(maze.getCellList().stream().allMatch(c -> c.getState().equals(CellState.OUT)));
 	}
 	
@@ -58,15 +61,6 @@ public class MazeTests
 	{
 		Maze maze = new Maze();
 		assertTrue(maze.getCellList().size() == maze.size());
-	}
-	
-	@Test
-	public void testEdgeListGeneration()
-	{
-		Maze maze = new Maze();
-		maze.setAlgorithm(new PrimsAlgorithm());		
-		maze.generateEdgeList();
-		assertFalse(maze.getEdgeList().isEmpty());
 	}
 	
 	@Test

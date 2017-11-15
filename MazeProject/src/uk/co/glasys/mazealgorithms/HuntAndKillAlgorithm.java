@@ -13,12 +13,23 @@ import uk.co.glasys.Cell.CellState;
 
 public class HuntAndKillAlgorithm implements MazeAlgorithm
 {
-
 	private Maze maze;
+	@Override
+	public Maze getMaze()
+	{
+		return maze;
+	}
+
+	
 	private List<Edge> edges;
+	@Override
+	public List<Edge> getEdges()
+	{
+		return edges;
+	}
 
 	@Override
-	public List<Edge> carve(Maze maze)
+	public void carve(Maze maze)
 	{
 		this.maze = maze;
 		edges = new ArrayList<Edge>();
@@ -45,7 +56,6 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 				currentCell = huntForNext();
 			}
 		}
-		return edges;
 	}	
 
 	private List<Cell> getNeighbours(Cell cell)

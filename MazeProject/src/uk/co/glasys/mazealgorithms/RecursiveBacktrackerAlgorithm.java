@@ -14,11 +14,23 @@ public class RecursiveBacktrackerAlgorithm implements MazeAlgorithm
 {
 
 	private Maze maze;
+	@Override
+	public Maze getMaze()
+	{
+		return maze;
+	}
+	
 	private List<Edge> edges = new ArrayList<Edge>();
+	@Override
+	public List<Edge> getEdges()
+	{
+		return edges;
+	}
+	
 	Random random = new Random(System.currentTimeMillis());			
 
 	@Override
-	public List<Edge> carve(Maze maze)
+	public void carve(Maze maze)
 	{
 		this.maze = maze;
 		
@@ -44,12 +56,10 @@ public class RecursiveBacktrackerAlgorithm implements MazeAlgorithm
 				current = backtrack(current);
 			}
 		}
-		
-		return edges;
 	}
 
 	private Cell backtrack(Cell current)
-	{
+	{//TODO copied from PrimsAlgorithm so should be moved out for sharing/re-use
 		Cell next = null;
 		
 		for(int i = edges.size() - 1; i >= 0; --i)

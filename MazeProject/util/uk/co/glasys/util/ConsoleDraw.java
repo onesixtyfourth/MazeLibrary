@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import uk.co.glasys.Cell;
-import uk.co.glasys.Maze;
+import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 
 public class ConsoleDraw implements MazeDrawer
 {
-	private Maze maze;
+	private MazeAlgorithm algorithm;
 	
 	private static final String horizontalLine = "__";
 	private static final String verticalLine = "|";
@@ -16,26 +16,26 @@ public class ConsoleDraw implements MazeDrawer
 	private static final String invisibleHorizontalLine = "  ";
 	private static final String invisibleVerticalLine = " ";
 	
-	public ConsoleDraw(Maze maze)
+	public ConsoleDraw(MazeAlgorithm algorithm)
 	{
-		this.maze = maze;
+		this.algorithm = algorithm;
 	}
 	
 	@Override
 	public void drawMaze()
 	{
 		StringBuilder row = new StringBuilder();
-		for(int i = 0; i < maze.getWidth(); ++i)
+		for(int i = 0; i < algorithm.getMaze().getWidth(); ++i)
 		{
 			row.append(String.format(" %s", horizontalLine));
 		}
 		System.out.println(row);
 		row.setLength(0);
 		
-		for (int i = 0; i < maze.getHeight(); ++i)
+		for (int i = 0; i < algorithm.getMaze().getHeight(); ++i)
 		{
 			final int rowIndex = i;
-			List<Cell> cells = maze.getCellList()
+			List<Cell> cells = algorithm.getMaze().getCellList()
 					.stream()
 					.filter(c -> c.getY() == rowIndex)
 					.collect(Collectors.toList());
@@ -44,7 +44,7 @@ public class ConsoleDraw implements MazeDrawer
 			row.setLength(0);
 		}		
 		System.out.println();
-		System.out.println(maze.toString());
+		System.out.println(algorithm.getMaze().toString() + " " + algorithm.getAlgorithmName());
 	}
 	
 	private String drawRow(List<Cell> cells)
@@ -58,11 +58,12 @@ public class ConsoleDraw implements MazeDrawer
 				row.append(verticalLine);
 			}
 			
-			int cellindex = cell.getY() *  maze.getWidth() + cell.getX();
-			List<Cell> neigbours = maze.getConnectedCells(cell);
+			int cellindex = cell.getY() *  algorithm.getMaze().getWidth() + cell.getX();
+			List<Cell> neigbours = algorithm.getMaze().getConnectedCells(cell);//TODO getConnectedCells broken
 			
-			if(cellindex + maze.getWidth() < maze.size() &&
-					neigbours.contains(maze.getCellList().get(cellindex + maze.getWidth())))
+			if(cellindex + algorithm.getMaze().getWidth() < algorithm.getMaze().size() &&
+					neigbours.contains(algorithm.getMaze().getCellList().get(
+											cellindex + algorithm.getMaze().getWidth())))
 			{
 				row.append(invisibleHorizontalLine);
 			}
@@ -71,8 +72,8 @@ public class ConsoleDraw implements MazeDrawer
 				row.append(horizontalLine);
 			}
 
-			if( cellindex + 1 < maze.size() &&
-					neigbours.contains(maze.getCellList().get(cellindex + 1)))
+			if( cellindex + 1 < algorithm.getMaze().size() &&
+					neigbours.contains(algorithm.getMaze().getCellList().get(cellindex + 1)) )
 			{
 				row.append(invisibleVerticalLine);
 			}

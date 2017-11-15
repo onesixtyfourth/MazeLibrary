@@ -13,12 +13,24 @@ import uk.co.glasys.Maze;
 public class KruskalsAlgorithm implements MazeAlgorithm
 {
 	private Maze maze;
-	private Random random = new Random(System.currentTimeMillis());		
+	@Override
+	public Maze getMaze()
+	{
+		return maze;
+	}
+	
 	private List<Edge> edges = new ArrayList<Edge>();	
+	@Override
+	public List<Edge> getEdges()
+	{
+		return edges;
+	}
+	
+	private Random random = new Random(System.currentTimeMillis());	
 	private List<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell>>();
 
 	@Override
-	public List<Edge> carve(Maze maze)
+	public void carve(Maze maze)
 	{
 		this.maze = maze;
 		generateInitialSets();
@@ -40,7 +52,6 @@ public class KruskalsAlgorithm implements MazeAlgorithm
 			}
 			connectPaths(cells.get(0), selectedPath);
 		}
-		return edges;
 	}
 	
 	private void connectPaths(List<Cell> path, List<Cell> connect)

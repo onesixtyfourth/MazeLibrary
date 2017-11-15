@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import uk.co.glasys.Cell.CellState;
-import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 
 public class Maze
 {
@@ -20,17 +19,13 @@ public class Maze
 	public int getHeight(){return height;}
 	public void setHeight(int height){this.height = height;}	
 	
-	private MazeAlgorithm algorithm;	
-	public MazeAlgorithm getAlgorithm(){return algorithm;}
-	public void setAlgorithm(MazeAlgorithm algorithm){this.algorithm = algorithm;}	
-	
-	protected List<Cell> cellList;	
+	protected List<Cell> cellList = new ArrayList<Cell>();	
 	public List<Cell> getCellList(){return cellList;}
 	public void setCellList(List<Cell> cellList){this.cellList = cellList;}
 	
-	private List<Edge> edgeList;
-	public List<Edge> getEdgeList(){return edgeList;}
-	public void setEdgeList(List<Edge> edgeList){this.edgeList = edgeList;}
+//	private List<Edge> edgeList = new ArrayList<Edge>();
+//	public List<Edge> getEdgeList(){return edgeList;}
+//	public void setEdgeList(List<Edge> edgeList){this.edgeList = edgeList;}
 
 	
 	public Maze()
@@ -47,9 +42,7 @@ public class Maze
 	{
 		setWidth(width);
 		setHeight(height);
-		setCellList(new ArrayList<Cell>());
 		generateCellList();
-		setEdgeList(new ArrayList<Edge>());
 	}	
 	
 	public int size()
@@ -68,14 +61,8 @@ public class Maze
 		}
 	}
 	
-	public void generateEdgeList()
-	{
-		setEdgeList(getAlgorithm().carve(this));
-	}
-	
 	public void resetMaze()
 	{
-		getEdgeList().clear();
 		getCellList().forEach(l -> l.setState(CellState.OUT));
 	}
 	
@@ -83,25 +70,24 @@ public class Maze
 	{
 		List<Cell> cellList = new ArrayList<Cell>();
 		
-		getEdgeList().forEach(item ->
-		{
-			if(item.getFrom().equals(cell))
-			{
-				cellList.add(item.getTo());
-			}
-			else if(item.getTo().equals(cell))
-			{
-				cellList.add(item.getFrom());
-			}
-		});
+//		getEdgeList().forEach(item ->
+//		{
+//			if(item.getFrom().equals(cell))
+//			{
+//				cellList.add(item.getTo());
+//			}
+//			else if(item.getTo().equals(cell))
+//			{
+//				cellList.add(item.getFrom());
+//			}
+//		});
 		return cellList;		
 	}
 		
 	@Override
 	public String toString()
-	{
-		return String.format("Width: %d, Height: %d, Algorithm Name: %s", 
-						getWidth(), getHeight(), getAlgorithm().getAlgorithmName());
+	{		
+		return String.format("Width: %d, Height: %d", getWidth(), getHeight());
 	}
 	
 	@Override
@@ -124,7 +110,6 @@ public class Maze
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(getWidth(), getHeight(), algorithm.hashCode(),
-						getCellList().hashCode(), getEdgeList().hashCode());
+		return Objects.hash(getWidth(), getHeight(), getCellList().hashCode()/*, getEdgeList().hashCode()*/);
 	}
 }
