@@ -13,6 +13,7 @@ import uk.co.glasys.mazealgorithms.HuntAndKillAlgorithm;
 import uk.co.glasys.mazealgorithms.KruskalsAlgorithm;
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 import uk.co.glasys.mazealgorithms.PrimsAlgorithm;
+import uk.co.glasys.mazealgorithms.RecursiveBacktrackerAlgorithm;
 
 public class AlgorithmTests
 {
@@ -60,6 +61,18 @@ public class AlgorithmTests
 				.stream()
 				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 		
+	}
+	
+	@Test
+	public void testRecursiveCarveMethod()
+	{
+		Maze maze = new Maze();
+		maze.setAlgorithm(new RecursiveBacktrackerAlgorithm());
+		maze.generateEdgeList();
+		
+		assertFalse(maze.getCellList()
+				.stream()
+				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 	}
 	
 	@Test

@@ -96,21 +96,6 @@ public class Maze
 		});
 		return cellList;		
 	}
-	
-//	public boolean areConnected(Cell from, Cell to)
-//	{
-//		boolean result = false;
-//		
-//		getEdgeList().forEach(item ->
-//		{
-//			if(item.getFrom().equals(from) && item.getTo().equals(to))
-//			{
-//				result = true;
-//			}
-//		});
-//		
-//		return result;
-//	}
 		
 	@Override
 	public String toString()
@@ -143,5 +128,3 @@ public class Maze
 						getCellList().hashCode(), getEdgeList().hashCode());
 	}
 }
-
-

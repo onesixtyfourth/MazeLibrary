@@ -5,51 +5,50 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import uk.co.glasys.Cell;
-import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
 import uk.co.glasys.Maze;
+import uk.co.glasys.Cell;
+import uk.co.glasys.Cell.CellState;
 
-
-public class PrimsAlgorithm implements MazeAlgorithm
+public class RecursiveBacktrackerAlgorithm implements MazeAlgorithm
 {
+
 	private Maze maze;
-	private List<Edge> edges;
-	
+	private List<Edge> edges = new ArrayList<Edge>();
+	Random random = new Random(System.currentTimeMillis());			
+
 	@Override
 	public List<Edge> carve(Maze maze)
 	{
 		this.maze = maze;
-		edges = new ArrayList<Edge>();
-		Random random = new Random(System.currentTimeMillis());			
-		Cell currentCell = maze.getCellList().get(random.nextInt(maze.size()));		
-		currentCell.setState(CellState.IN);
-		Cell nextCell = null;		
+		
+		Cell current = maze.getCellList().get(random.nextInt(maze.size()));
+		current.setState(CellState.IN);
+		
+		Cell next = null;
 		
 		while(maze.getCellList()
-					.stream()
-					.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
+				.stream()
+				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
 		{
-			List<Cell> neighbours = getNeighbours(currentCell);	
+			List<Cell> neighbours = getNeighbours(current);
 			if(neighbours.size() > 0)
 			{
-				nextCell = neighbours.get(random.nextInt(neighbours.size()));
-				edges.add(new Edge(currentCell, nextCell));
-				
-				nextCell.setState(CellState.IN);
-				currentCell = nextCell;
+				next = neighbours.get(random.nextInt(neighbours.size()));
+				next.setState(CellState.IN);
+				edges.add(new Edge(current, next));
+				current = next;
 			}
 			else
 			{
-				currentCell = backTrack(currentCell);
+				current = backtrack(current);
 			}
 		}
+		
 		return edges;
-	}	
-	
-	//TODO check this is actually correctly backtracking. It should be as the reverse order of the edges
-	//will reflect the paths creation so far. If it isn't I will have to trace the path backwards.
-	private Cell backTrack(Cell cell)
+	}
+
+	private Cell backtrack(Cell current)
 	{
 		Cell next = null;
 		
@@ -57,12 +56,12 @@ public class PrimsAlgorithm implements MazeAlgorithm
 		{
 			Edge edge = edges.get(i);
 
-			if(!edge.getTo().equals(cell) && !getNeighbours(edge.getTo()).isEmpty())
+			if(!edge.getTo().equals(current) && !getNeighbours(edge.getTo()).isEmpty())
 			{
 				next = edge.getTo();
 				break;
 			}
-			else if(!edge.getFrom().equals(cell) &&!getNeighbours(edge.getFrom()).isEmpty())
+			else if(!edge.getFrom().equals(current) &&!getNeighbours(edge.getFrom()).isEmpty())
 			{
 				next = edge.getFrom();
 				break;
@@ -70,14 +69,14 @@ public class PrimsAlgorithm implements MazeAlgorithm
 		}
 		return next;
 	}
-	
-	private List<Cell> getNeighbours(Cell cell)
-	{
+
+	private List<Cell> getNeighbours(Cell current)
+	{//TODO copied from PrimsAlgorithm so should be moved out for sharing/re-use
 		List<Cell> neighbours = new ArrayList<Cell>();
 
-		for(int i = 0; i < cell.getNumberOfSides(); ++i)
+		for(int i = 0; i < current.getNumberOfSides(); ++i)
 		{//TODO need to accommodate more than four sides
-			int index = maze.getCellList().indexOf(cell);
+			int index = maze.getCellList().indexOf(current);
 			Cell toCheck = null;
 			
 			switch (i)
@@ -119,21 +118,5 @@ public class PrimsAlgorithm implements MazeAlgorithm
 		}
 		return neighbours;
 	}
-	
-	@Override
-	public boolean equals(Object obj)
-	{
-		boolean equal = false;
-		if(Objects.nonNull(obj) && this == obj)
-		{
-			equal = true;
-		}
-		return equal;
-	}
-	
-	@Override
-	public int hashCode()
-	{//TODO seems a bit silly would be the same as the maze.
-		return Objects.hash(maze.hashCode());
-	}
+
 }

@@ -21,7 +21,6 @@ public class ConsoleDraw implements MazeDrawer
 		this.maze = maze;
 	}
 	
-	
 	@Override
 	public void drawMaze()
 	{
@@ -70,7 +69,6 @@ public class ConsoleDraw implements MazeDrawer
 			else
 			{
 				row.append(horizontalLine);
-				
 			}
 
 			if( cellindex + 1 < maze.size() &&
@@ -81,7 +79,6 @@ public class ConsoleDraw implements MazeDrawer
 			else
 			{
 				row.append(verticalLine);
-				
 			}
 			
 		}
