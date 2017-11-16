@@ -66,23 +66,23 @@ public class Maze
 		getCellList().forEach(l -> l.setState(CellState.OUT));
 	}
 	
-	public List<Cell> getConnectedCells(Cell cell)
-	{
-		List<Cell> cellList = new ArrayList<Cell>();
-		
-//		getEdgeList().forEach(item ->
-//		{
-//			if(item.getFrom().equals(cell))
-//			{
-//				cellList.add(item.getTo());
-//			}
-//			else if(item.getTo().equals(cell))
-//			{
-//				cellList.add(item.getFrom());
-//			}
-//		});
-		return cellList;		
-	}
+//	public List<Cell> getConnectedCells(Cell cell)
+//	{
+//		List<Cell> cellList = new ArrayList<Cell>();
+//		
+////		getEdgeList().forEach(item ->
+////		{
+////			if(item.getFrom().equals(cell))
+////			{
+////				cellList.add(item.getTo());
+////			}
+////			else if(item.getTo().equals(cell))
+////			{
+////				cellList.add(item.getFrom());
+////			}
+////		});
+//		return cellList;		
+//	}
 		
 	@Override
 	public String toString()

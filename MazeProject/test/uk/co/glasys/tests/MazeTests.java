@@ -20,7 +20,6 @@ public class MazeTests
 		Maze maze = new Maze();
 		assertTrue(maze.getWidth() == Maze.getDefaultWidth() && maze.getHeight() == Maze.getDefaultWidth());
 		assertNotNull(maze.getCellList());
-//		assertNotNull(maze.getEdgeList());
 	}
 
 	@Test
@@ -30,7 +29,6 @@ public class MazeTests
 		Maze maze = new Maze(size);
 		assertTrue(maze.getWidth() == size && maze.getHeight() == size);
 		assertNotNull(maze.getCellList());
-//		assertNotNull(maze.getEdgeList());
 	}
 
 	@Test
@@ -40,19 +38,15 @@ public class MazeTests
 		Maze maze = new Maze(width, height);
 		assertTrue(maze.getWidth() == width && maze.getHeight() == height);
 		assertNotNull(maze.getCellList());
-//		assertNotNull(maze.getEdgeList());
 	}	
 		
 	@Test
 	public void testResetMaze()
 	{
 		Maze maze = new Maze();
-//		maze.setAlgorithm(new PrimsAlgorithm());		
-//		maze.generateEdgeList();
 		MazeAlgorithm algorithm = new PrimsAlgorithm();
-//		maze.setEdgeList(algorithm.carve(maze));
+		algorithm.carve(maze);
 		maze.resetMaze();
-//		assertTrue(maze.getEdgeList().isEmpty());
 		assertTrue(maze.getCellList().stream().allMatch(c -> c.getState().equals(CellState.OUT)));
 	}
 	

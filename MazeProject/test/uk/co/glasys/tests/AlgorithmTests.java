@@ -30,7 +30,7 @@ public class AlgorithmTests
 	{
 		Maze maze = new Maze();
 		MazeAlgorithm algorithm = new PrimsAlgorithm();
-//		maze.setEdgeList(algorithm.carve(maze));
+		algorithm.carve(maze);
 		
 		assertFalse(maze.getCellList()
 							.stream()
@@ -43,7 +43,7 @@ public class AlgorithmTests
 	{
 		Maze maze = new Maze();
 		MazeAlgorithm algorithm = new HuntAndKillAlgorithm();
-//		maze.setEdgeList(algorithm.carve(maze));
+		algorithm.carve(maze);
 		
 		assertFalse(maze.getCellList()
 							.stream()
@@ -55,7 +55,7 @@ public class AlgorithmTests
 	{
 		Maze maze = new Maze();
 		MazeAlgorithm algorithm = new KruskalsAlgorithm();
-//		maze.setEdgeList(algorithm.carve(maze));
+		algorithm.carve(maze);
 		
 		assertFalse(maze.getCellList()
 				.stream()
@@ -68,7 +68,7 @@ public class AlgorithmTests
 	{
 		Maze maze = new Maze();
 		MazeAlgorithm algorithm = new RecursiveBacktrackerAlgorithm();
-//		maze.setEdgeList(algorithm.carve(maze));
+		algorithm.carve(maze);
 		
 		assertFalse(maze.getCellList()
 				.stream()
@@ -80,7 +80,7 @@ public class AlgorithmTests
 	{
 		Maze maze = new Maze();
 		MazeAlgorithm algorithm = new PrimsAlgorithm();
-//		maze.setEdgeList(algorithm.carve(maze));
+		algorithm.carve(maze);
 		
 		assertFalse(maze.getCellList()
 							.stream()
@@ -89,7 +89,7 @@ public class AlgorithmTests
 		
 		algorithm = new HuntAndKillAlgorithm();
 		maze.resetMaze();
-//		maze.setEdgeList(algorithm.carve(maze));
+		algorithm.carve(maze);
 		
 		assertFalse(maze.getCellList()
 							.stream()
