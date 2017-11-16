@@ -13,26 +13,18 @@ import uk.co.glasys.Maze;
 
 public class PrimsAlgorithm extends MazeAlgorithm
 {
-//	private Maze maze;
-//	@Override
-//	public Maze getMaze(){return maze;}
-//	public void setMaze(Maze maze){this.maze = maze;}
-//
-//	private List<Edge> edges = new ArrayList<Edge>();
-//	@Override
-//	public List<Edge> getEdges(){return edges;}
 	
 	@Override
 	public void carve(Maze maze)
 	{
 		setMaze(maze);
-//		edges = new ArrayList<Edge>();
-		Random random = new Random(System.currentTimeMillis());			
-		Cell currentCell = getMaze().getCellList().get(random.nextInt(getMaze().size()));		
+		generateCellList();
+//		Random random = new Random(System.currentTimeMillis());			
+		Cell currentCell = getCells().get(random.nextInt(getMaze().size()));		
 		currentCell.setState(CellState.IN);
 		Cell nextCell = null;		
 		
-		while(getMaze().getCellList()
+		while(getCells()
 					.stream()
 					.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
 		{
@@ -76,54 +68,55 @@ public class PrimsAlgorithm extends MazeAlgorithm
 		return next;
 	}
 	
-	private List<Cell> getNeighbours(Cell cell)
-	{
-		List<Cell> neighbours = new ArrayList<Cell>();
-
-		for(int i = 0; i < cell.getNumberOfSides(); ++i)
-		{//TODO need to accommodate more than four sides
-			int index = getMaze().getCellList().indexOf(cell);
-			Cell toCheck = null;
-			
-			switch (i)
-			{
-				case 0:
-				if(index - getMaze().getWidth() >= 0 && index - getMaze().getWidth() < getMaze().size())
-				{
-					toCheck = getMaze().getCellList().get(index - getMaze().getWidth());
-					break;
-				}
-					
-				case 1:
-				if (index + 1 >= 0 && index + 1 < getMaze().size() &&
-						getMaze().getCellList().get(index + 1).getY() ==  getMaze().getCellList().get(index).getY())
-				{
-					toCheck = getMaze().getCellList().get(index + 1);
-					break;
-				}
-				case 2:
-				if (index + getMaze().getWidth() >= 0 && index + getMaze().getWidth() < getMaze().size())
-				{
-					toCheck = getMaze().getCellList().get(index + getMaze().getWidth());
-					break;
-				}
-				case 3:
-				if (index - 1 >= 0 && index - 1 < getMaze().size() &&
-						getMaze().getCellList().get(index - 1).getY() ==  getMaze().getCellList().get(index).getY())
-				{
-					toCheck = getMaze().getCellList().get(index - 1);
-					break;
-				}
-			}
-			
-			if(Objects.nonNull(toCheck) && toCheck.getState() != CellState.IN )
-			{
-				neighbours.add(toCheck);
-				toCheck.setState(CellState.FRONTIER);
-			}
-		}
-		return neighbours;
-	}
+//	//TODO can probably go up to the abstract class
+//	private List<Cell> getNeighbours(Cell cell)
+//	{
+//		List<Cell> neighbours = new ArrayList<Cell>();
+//
+//		for(int i = 0; i < cell.getNumberOfSides(); ++i)
+//		{//TODO need to accommodate more than four sides
+//			int index = getCells().indexOf(cell);
+//			Cell toCheck = null;
+//			
+//			switch (i)
+//			{
+//				case 0:
+//				if(index - getMaze().getWidth() >= 0 && index - getMaze().getWidth() < getMaze().size())
+//				{
+//					toCheck = getCells().get(index - getMaze().getWidth());
+//					break;
+//				}
+//					
+//				case 1:
+//				if (index + 1 >= 0 && index + 1 < getMaze().size() &&
+//						getCells().get(index + 1).getY() ==  getCells().get(index).getY())
+//				{
+//					toCheck = getCells().get(index + 1);
+//					break;
+//				}
+//				case 2:
+//				if (index + getMaze().getWidth() >= 0 && index + getMaze().getWidth() < getMaze().size())
+//				{
+//					toCheck = getCells().get(index + getMaze().getWidth());
+//					break;
+//				}
+//				case 3:
+//				if (index - 1 >= 0 && index - 1 < getMaze().size() &&
+//						getCells().get(index - 1).getY() ==  getCells().get(index).getY())
+//				{
+//					toCheck = getCells().get(index - 1);
+//					break;
+//				}
+//			}
+//			
+//			if(Objects.nonNull(toCheck) && toCheck.getState() != CellState.IN )
+//			{
+//				neighbours.add(toCheck);
+//				toCheck.setState(CellState.FRONTIER);
+//			}
+//		}
+//		return neighbours;
+//	}
 	
 	@Override
 	public boolean equals(Object obj)

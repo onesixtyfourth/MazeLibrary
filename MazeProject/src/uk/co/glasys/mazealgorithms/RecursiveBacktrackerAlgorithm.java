@@ -12,19 +12,19 @@ import uk.co.glasys.Cell.CellState;
 
 public class RecursiveBacktrackerAlgorithm extends MazeAlgorithm
 {
-	Random random = new Random(System.currentTimeMillis());			
+//	Random random = new Random(System.currentTimeMillis());			
 
 	@Override
 	public void carve(Maze maze)
 	{
 		setMaze(maze);
-		
-		Cell current = getMaze().getCellList().get(random.nextInt(getMaze().size()));
+		generateCellList();
+		Cell current = getCells().get(random.nextInt(getMaze().size()));
 		current.setState(CellState.IN);
 		
 		Cell next = null;
 		
-		while(getMaze().getCellList()
+		while(getCells()
 				.stream()
 				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
 		{
@@ -65,53 +65,53 @@ public class RecursiveBacktrackerAlgorithm extends MazeAlgorithm
 		return next;
 	}
 
-	private List<Cell> getNeighbours(Cell current)
-	{//TODO copied from PrimsAlgorithm so should be moved out for sharing/re-use
-		List<Cell> neighbours = new ArrayList<Cell>();
-
-		for(int i = 0; i < current.getNumberOfSides(); ++i)
-		{//TODO need to accommodate more than four sides
-			int index = getMaze().getCellList().indexOf(current);
-			Cell toCheck = null;
-			
-			switch (i)
-			{
-				case 0:
-				if(index - getMaze().getWidth() >= 0 && index - getMaze().getWidth() < getMaze().size())
-				{
-					toCheck = getMaze().getCellList().get(index - getMaze().getWidth());
-					break;
-				}
-					
-				case 1:
-				if (index + 1 >= 0 && index + 1 < getMaze().size() &&
-						getMaze().getCellList().get(index + 1).getY() ==  getMaze().getCellList().get(index).getY())
-				{
-					toCheck = getMaze().getCellList().get(index + 1);
-					break;
-				}
-				case 2:
-				if (index + getMaze().getWidth() >= 0 && index + getMaze().getWidth() < getMaze().size())
-				{
-					toCheck = getMaze().getCellList().get(index + getMaze().getWidth());
-					break;
-				}
-				case 3:
-				if (index - 1 >= 0 && index - 1 < getMaze().size() &&
-						getMaze().getCellList().get(index - 1).getY() ==  getMaze().getCellList().get(index).getY())
-				{
-					toCheck = getMaze().getCellList().get(index - 1);
-					break;
-				}
-			}
-			
-			if(Objects.nonNull(toCheck) && toCheck.getState() != CellState.IN )
-			{
-				neighbours.add(toCheck);
-				toCheck.setState(CellState.FRONTIER);
-			}
-		}
-		return neighbours;
-	}
+//	private List<Cell> getNeighbours(Cell current)
+//	{//TODO copied from PrimsAlgorithm so should be moved out for sharing/re-use
+//		List<Cell> neighbours = new ArrayList<Cell>();
+//
+//		for(int i = 0; i < current.getNumberOfSides(); ++i)
+//		{//TODO need to accommodate more than four sides
+//			int index = getCells().indexOf(current);
+//			Cell toCheck = null;
+//			
+//			switch (i)
+//			{
+//				case 0:
+//				if(index - getMaze().getWidth() >= 0 && index - getMaze().getWidth() < getMaze().size())
+//				{
+//					toCheck = getCells().get(index - getMaze().getWidth());
+//					break;
+//				}
+//					
+//				case 1:
+//				if (index + 1 >= 0 && index + 1 < getMaze().size() &&
+//						getCells().get(index + 1).getY() ==  getCells().get(index).getY())
+//				{
+//					toCheck = getCells().get(index + 1);
+//					break;
+//				}
+//				case 2:
+//				if (index + getMaze().getWidth() >= 0 && index + getMaze().getWidth() < getMaze().size())
+//				{
+//					toCheck = getCells().get(index + getMaze().getWidth());
+//					break;
+//				}
+//				case 3:
+//				if (index - 1 >= 0 && index - 1 < getMaze().size() &&
+//						getCells().get(index - 1).getY() ==  getCells().get(index).getY())
+//				{
+//					toCheck = getCells().get(index - 1);
+//					break;
+//				}
+//			}
+//			
+//			if(Objects.nonNull(toCheck) && toCheck.getState() != CellState.IN )
+//			{
+//				neighbours.add(toCheck);
+//				toCheck.setState(CellState.FRONTIER);
+//			}
+//		}
+//		return neighbours;
+//	}
 
 }

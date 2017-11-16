@@ -35,7 +35,7 @@ public class ConsoleDraw implements MazeDrawer
 		for (int i = 0; i < algorithm.getMaze().getHeight(); ++i)
 		{
 			final int rowIndex = i;
-			List<Cell> cells = algorithm.getMaze().getCellList()
+			List<Cell> cells = algorithm.getCells()
 					.stream()
 					.filter(c -> c.getY() == rowIndex)
 					.collect(Collectors.toList());
@@ -62,7 +62,7 @@ public class ConsoleDraw implements MazeDrawer
 			List<Cell> neigbours = algorithm.getConnectedCells(cell);//TODO getConnectedCells broken
 			
 			if(cellindex + algorithm.getMaze().getWidth() < algorithm.getMaze().size() &&
-					neigbours.contains(algorithm.getMaze().getCellList().get(
+					neigbours.contains(algorithm.getCells().get(
 											cellindex + algorithm.getMaze().getWidth())))
 			{
 				row.append(invisibleHorizontalLine);
@@ -73,7 +73,7 @@ public class ConsoleDraw implements MazeDrawer
 			}
 
 			if( cellindex + 1 < algorithm.getMaze().size() &&
-					neigbours.contains(algorithm.getMaze().getCellList().get(cellindex + 1)) )
+					neigbours.contains(algorithm.getCells().get(cellindex + 1)) )
 			{
 				row.append(invisibleVerticalLine);
 			}

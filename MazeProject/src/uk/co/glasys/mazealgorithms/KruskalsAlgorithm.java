@@ -12,14 +12,13 @@ import uk.co.glasys.Maze;
 
 public class KruskalsAlgorithm extends MazeAlgorithm
 {
-	
-	
-	private Random random = new Random(System.currentTimeMillis());	
+//	private Random random = new Random(System.currentTimeMillis());	
 	private List<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell>>();
 
 	public void carve(Maze maze)
 	{
 		setMaze(maze);
+		generateCellList();
 		generateInitialSets();
 		
 		while(cells.size() > 1)
@@ -80,10 +79,11 @@ public class KruskalsAlgorithm extends MazeAlgorithm
 		return neighbours;
 	}
 	
-	private List<Cell> getNeighbours(Cell cell)
+	@Override
+	public List<Cell> getNeighbours(Cell cell)
 	{
 		List<Cell> neighbours = new ArrayList<Cell>();
-		for(Cell nextCell : getMaze().getCellList())
+		for(Cell nextCell : getCells())
 		{
 			if(canCellsConnect(cell, nextCell))
 			{
@@ -92,28 +92,29 @@ public class KruskalsAlgorithm extends MazeAlgorithm
 		}
 		return neighbours;
 	}
-
-	private boolean canCellsConnect(Cell next, Cell potential)
-	{
-		boolean result = false;
-		
-		int dx = next.getX() - potential.getX();
-		int dy = next.getY() - potential.getY();
-		double distance = Math.sqrt(dx * dx + dy * dy);
-		
-		if(distance == 1)
-		{
-			if(next.getX() == potential.getX() || next.getY() == potential.getY())
-			{
-				result = true;
-			}
-		}		
-		return result;
-	}
+	
+//	@Override
+//	public boolean canCellsConnect(Cell next, Cell potential)
+//	{
+//		boolean result = false;
+//		
+//		int dx = next.getX() - potential.getX();
+//		int dy = next.getY() - potential.getY();
+//		double distance = Math.sqrt(dx * dx + dy * dy);
+//		
+//		if(distance == 1)
+//		{
+//			if(next.getX() == potential.getX() || next.getY() == potential.getY())
+//			{
+//				result = true;
+//			}
+//		}		
+//		return result;
+//	}
 	
 	private void generateInitialSets()
 	{
-		for(Cell cell : getMaze().getCellList())
+		for(Cell cell : getCells())
 		{
 			ArrayList<Cell> tmp = new ArrayList<Cell>();
 			tmp.add(cell);

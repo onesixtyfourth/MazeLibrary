@@ -18,15 +18,15 @@ public class MazeMain
 		algorithm = new PrimsAlgorithm();
 		carveAndDraw();
 		
-		maze.resetMaze();		
+		algorithm.resetMaze();		
 		algorithm = new HuntAndKillAlgorithm() ;
 		carveAndDraw();
 		
-		maze.resetMaze();
+		algorithm.resetMaze();
 		algorithm = new KruskalsAlgorithm();
 		carveAndDraw();
 		
-		maze.resetMaze();
+		algorithm.resetMaze();
 		algorithm = new RecursiveBacktrackerAlgorithm();
 		carveAndDraw();
 	}

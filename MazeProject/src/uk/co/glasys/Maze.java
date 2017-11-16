@@ -19,9 +19,9 @@ public class Maze
 	public int getHeight(){return height;}
 	public void setHeight(int height){this.height = height;}	
 	
-	protected List<Cell> cellList = new ArrayList<Cell>();	
-	public List<Cell> getCellList(){return cellList;}
-	public void setCellList(List<Cell> cellList){this.cellList = cellList;}
+//	protected List<Cell> cells = new ArrayList<Cell>();	
+//	public List<Cell> getCells(){return cells;}
+//	public void setCells(List<Cell> cellList){this.cells = cellList;}
 	
 //	private List<Edge> edgeList = new ArrayList<Edge>();
 //	public List<Edge> getEdgeList(){return edgeList;}
@@ -42,7 +42,7 @@ public class Maze
 	{
 		setWidth(width);
 		setHeight(height);
-		generateCellList();
+//		generateCellList();
 	}	
 	
 	public int size()
@@ -50,21 +50,21 @@ public class Maze
 		return getWidth() * getHeight();
 	}
 	
-	public void generateCellList()
-	{
-		getCellList().clear();		
-		for(int i = 0; i < size(); ++i)
-		{
-			int x = i % getWidth();
-			int y = i / getWidth();
-			getCellList().add(new Cell(x, y));
-		}
-	}
+//	public void generateCellList()
+//	{
+//		getCells().clear();		
+//		for(int i = 0; i < size(); ++i)
+//		{
+//			int x = i % getWidth();
+//			int y = i / getWidth();
+//			getCells().add(new Cell(x, y));
+//		}
+//	}
 	
-	public void resetMaze()
-	{
-		getCellList().forEach(l -> l.setState(CellState.OUT));
-	}
+//	public void resetMaze()
+//	{
+//		getCells().forEach(l -> l.setState(CellState.OUT));
+//	}
 	
 //	public List<Cell> getConnectedCells(Cell cell)
 //	{
@@ -110,6 +110,6 @@ public class Maze
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(getWidth(), getHeight(), getCellList().hashCode()/*, getEdgeList().hashCode()*/);
+		return Objects.hash(getWidth(), getHeight()/*, getCells().hashCode(), getEdgeList().hashCode()*/);
 	}
 }
