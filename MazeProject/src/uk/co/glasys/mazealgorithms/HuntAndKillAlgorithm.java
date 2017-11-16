@@ -1,15 +1,12 @@
 package uk.co.glasys.mazealgorithms;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import uk.co.glasys.Cell;
+import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
 import uk.co.glasys.Maze;
-import uk.co.glasys.Cell.CellState;
 
 public class HuntAndKillAlgorithm extends MazeAlgorithm
 {
@@ -18,8 +15,7 @@ public class HuntAndKillAlgorithm extends MazeAlgorithm
 	public void carve(Maze maze)
 	{
 		setMaze( maze);
-		generateCellList();
-//		Random random = new Random(System.currentTimeMillis());			
+		generateCellList();	
 		Cell currentCell = getCells().get(random.nextInt(getMaze().size()));		
 		currentCell.setState(CellState.IN);
 		Cell nextCell = null;
@@ -62,7 +58,8 @@ public class HuntAndKillAlgorithm extends MazeAlgorithm
 				for (Cell cell : cells)
 				{
 					if(cell.getState().equals(CellState.IN) && getNeighbours(cell).stream()
-																.anyMatch(c -> c.getState().equals(CellState.OUT) || c.getState().equals(CellState.FRONTIER)) )
+																.anyMatch(c -> c.getState().equals(CellState.OUT) || 
+																			c.getState().equals(CellState.FRONTIER)) )
 					{
 						next = cell;
 						break search;

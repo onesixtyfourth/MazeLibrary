@@ -44,7 +44,7 @@ public class ConsoleDraw implements MazeDrawer
 			row.setLength(0);
 		}		
 		System.out.println();
-		System.out.println(algorithm.getMaze().toString() + " " + algorithm.getAlgorithmName());
+		System.out.println(algorithm.toString());
 	}
 	
 	private String drawRow(List<Cell> cells)

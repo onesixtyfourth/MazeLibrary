@@ -1,10 +1,6 @@
 package uk.co.glasys;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-
-import uk.co.glasys.Cell.CellState;
 
 public class Maze
 {
@@ -18,15 +14,6 @@ public class Maze
 	private int height;
 	public int getHeight(){return height;}
 	public void setHeight(int height){this.height = height;}	
-	
-//	protected List<Cell> cells = new ArrayList<Cell>();	
-//	public List<Cell> getCells(){return cells;}
-//	public void setCells(List<Cell> cellList){this.cells = cellList;}
-	
-//	private List<Edge> edgeList = new ArrayList<Edge>();
-//	public List<Edge> getEdgeList(){return edgeList;}
-//	public void setEdgeList(List<Edge> edgeList){this.edgeList = edgeList;}
-
 	
 	public Maze()
 	{
@@ -42,7 +29,6 @@ public class Maze
 	{
 		setWidth(width);
 		setHeight(height);
-//		generateCellList();
 	}	
 	
 	public int size()
@@ -50,40 +36,6 @@ public class Maze
 		return getWidth() * getHeight();
 	}
 	
-//	public void generateCellList()
-//	{
-//		getCells().clear();		
-//		for(int i = 0; i < size(); ++i)
-//		{
-//			int x = i % getWidth();
-//			int y = i / getWidth();
-//			getCells().add(new Cell(x, y));
-//		}
-//	}
-	
-//	public void resetMaze()
-//	{
-//		getCells().forEach(l -> l.setState(CellState.OUT));
-//	}
-	
-//	public List<Cell> getConnectedCells(Cell cell)
-//	{
-//		List<Cell> cellList = new ArrayList<Cell>();
-//		
-////		getEdgeList().forEach(item ->
-////		{
-////			if(item.getFrom().equals(cell))
-////			{
-////				cellList.add(item.getTo());
-////			}
-////			else if(item.getTo().equals(cell))
-////			{
-////				cellList.add(item.getFrom());
-////			}
-////		});
-//		return cellList;		
-//	}
-		
 	@Override
 	public String toString()
 	{		
@@ -110,6 +62,6 @@ public class Maze
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(getWidth(), getHeight()/*, getCells().hashCode(), getEdgeList().hashCode()*/);
+		return Objects.hash(getWidth(), getHeight());
 	}
 }

@@ -3,7 +3,6 @@ package uk.co.glasys.mazealgorithms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import uk.co.glasys.Cell;
 import uk.co.glasys.Cell.CellState;
@@ -12,7 +11,6 @@ import uk.co.glasys.Maze;
 
 public class KruskalsAlgorithm extends MazeAlgorithm
 {
-//	private Random random = new Random(System.currentTimeMillis());	
 	private List<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell>>();
 
 	public void carve(Maze maze)

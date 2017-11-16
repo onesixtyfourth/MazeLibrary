@@ -10,8 +10,7 @@ public class Edge
 	
 	private Cell to;
 	public Cell getTo(){return to;}
-	public void setTo(Cell to){this.to = to;}	
-	
+	public void setTo(Cell to){this.to = to;}		
 
 	public Edge(Cell from, Cell to)
 	{
@@ -62,6 +61,4 @@ public class Edge
 	{		
 		return Objects.hash(getFrom(), getTo());
 	}
-	
-	
 }

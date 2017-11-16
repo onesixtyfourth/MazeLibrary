@@ -31,12 +31,7 @@ public abstract class MazeAlgorithm
 	 * 
 	 */
 	public abstract void carve(Maze maze);
-//	
-//	public MazeAlgorithm()
-//	{
-//		generateCellList();
-//	}
-	
+
 	public List<Cell> getConnectedCells(Cell cell)
 	{
 		List<Cell> cellList = new ArrayList<Cell>();
@@ -55,12 +50,11 @@ public abstract class MazeAlgorithm
 		return cellList;		
 	}
 	
-	public void resetMaze()
+	public void reset()
 	{
 		getCells().forEach(l -> l.setState(CellState.OUT));
 	}
 	
-	//TODO can probably go up to the abstract class
 	public List<Cell> getNeighbours(Cell cell)
 	{
 		List<Cell> neighbours = new ArrayList<Cell>();
@@ -148,9 +142,29 @@ public abstract class MazeAlgorithm
 	 */
 	public String getAlgorithmName()
 	{
-		String className = this.getClass()
-								.getSimpleName()
-								.replace("Algorithm", "");
-		return className;
+		return this.getClass().getSimpleName().replace("Algorithm", "");
 	}	
+	
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return String.format("%s : Maze = %d, Width: %d, Height: %d", getAlgorithmName(), 
+																		getMaze().size(), 
+																		getMaze().getWidth(), 
+																		getMaze().getHeight());
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		boolean equal = false;
+		if(Objects.nonNull(obj) && this == obj)
+		{
+			equal = true;
+		}
+		return equal;
+	}
+	
+	//TODO consider overriding hashcode
 }

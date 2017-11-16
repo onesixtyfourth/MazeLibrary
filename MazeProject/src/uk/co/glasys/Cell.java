@@ -29,8 +29,7 @@ public class Cell
 	public static enum CellState
 	{//TODO find somewhere better to put this.
 		IN, OUT, FRONTIER
-	}
-	
+	}	
 	
 	public Cell(int x, int y)
 	{
@@ -43,8 +42,7 @@ public class Cell
 		setY(y);
 		setNumberOfSides(sides);
 		setState(CellState.OUT);
-	}
-	
+	}	
 	
 	@Override
 	public String toString()
