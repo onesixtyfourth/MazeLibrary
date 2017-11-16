@@ -11,28 +11,28 @@ import uk.co.glasys.Edge;
 import uk.co.glasys.Maze;
 import uk.co.glasys.Cell.CellState;
 
-public class HuntAndKillAlgorithm implements MazeAlgorithm
+public class HuntAndKillAlgorithm extends MazeAlgorithm
 {
-	private Maze maze;
-	@Override
-	public Maze getMaze()
-	{
-		return maze;
-	}
-
-	
-	private List<Edge> edges;
-	@Override
-	public List<Edge> getEdges()
-	{
-		return edges;
-	}
+//	private Maze maze;
+//	@Override
+//	public Maze getMaze()
+//	{
+//		return maze;
+//	}
+//
+//	
+//	private List<Edge> edges;
+//	@Override
+//	public List<Edge> getEdges()
+//	{
+//		return edges;
+//	}
 
 	@Override
 	public void carve(Maze maze)
 	{
-		this.maze = maze;
-		edges = new ArrayList<Edge>();
+		setMaze( maze);
+//		getEdges() = new ArrayList<Edge>();
 		Random random = new Random(System.currentTimeMillis());			
 		Cell currentCell = maze.getCellList().get(random.nextInt(maze.size()));		
 		currentCell.setState(CellState.IN);
@@ -46,7 +46,7 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 			if(neighbours.size() > 0)
 			{
 				nextCell = neighbours.get(random.nextInt(neighbours.size()));
-				edges.add(new Edge(currentCell, nextCell));
+				getEdges().add(new Edge(currentCell, nextCell));
 				
 				nextCell.setState(CellState.IN);
 				currentCell = nextCell;
@@ -65,36 +65,36 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 		{
 			for(int i = 0; i < cell.getNumberOfSides(); ++i)
 			{//TODO need to accommodate more than four sides
-				int index = maze.getCellList().indexOf(cell);
+				int index = getMaze().getCellList().indexOf(cell);
 				Cell toCheck = null;
 				
 				switch (i)
 				{
 					case 0:
-					if(index - maze.getWidth() >= 0 && index - maze.getWidth() < maze.size())
+					if(index - getMaze().getWidth() >= 0 && index - getMaze().getWidth() < getMaze().size())
 					{
-						toCheck = maze.getCellList().get(index - maze.getWidth());
+						toCheck = getMaze().getCellList().get(index - getMaze().getWidth());
 						break;
 					}
 						
 					case 1:
-					if (index + 1 >= 0 && index + 1 < maze.size() &&
-							 maze.getCellList().get(index + 1).getY() ==  maze.getCellList().get(index).getY())
+					if (index + 1 >= 0 && index + 1 < getMaze().size() &&
+							getMaze().getCellList().get(index + 1).getY() ==  getMaze().getCellList().get(index).getY())
 					{
-						toCheck = maze.getCellList().get(index + 1);
+						toCheck = getMaze().getCellList().get(index + 1);
 						break;
 					}
 					case 2:
-					if (index + maze.getWidth() >= 0 && index + maze.getWidth() < maze.size())
+					if (index + getMaze().getWidth() >= 0 && index + getMaze().getWidth() < getMaze().size())
 					{
-						toCheck = maze.getCellList().get(index + maze.getWidth());
+						toCheck = getMaze().getCellList().get(index + getMaze().getWidth());
 						break;
 					}
 					case 3:
-					if (index - 1 >= 0 && index - 1 < maze.size() &&
-							 maze.getCellList().get(index - 1).getY() ==  maze.getCellList().get(index).getY())
+					if (index - 1 >= 0 && index - 1 < getMaze().size() &&
+							getMaze().getCellList().get(index - 1).getY() ==  getMaze().getCellList().get(index).getY())
 					{
-						toCheck = maze.getCellList().get(index - 1);
+						toCheck = getMaze().getCellList().get(index - 1);
 						break;
 					}
 				}
@@ -114,11 +114,11 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 		
 		search:
 		{
-			for (int i = 0; i < maze.getHeight(); ++i)
+			for (int i = 0; i < getMaze().getHeight(); ++i)
 			{
 				final int rowIndex = i;
 							
-				List<Cell> cells = maze.getCellList()
+				List<Cell> cells = getMaze().getCellList()
 						.stream()
 						.filter(c -> c.getY() == rowIndex)
 						.collect(Collectors.toList());
@@ -142,7 +142,7 @@ public class HuntAndKillAlgorithm implements MazeAlgorithm
 		if(!neighbours.isEmpty())
 		{
 			Cell inPath = neighbours.get(0);
-			edges.add(new Edge(next, inPath));
+			getEdges().add(new Edge(next, inPath));
 			next = inPath;
 			next.setState(CellState.IN);
 		}

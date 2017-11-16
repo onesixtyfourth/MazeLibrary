@@ -10,29 +10,16 @@ import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
 import uk.co.glasys.Maze;
 
-public class KruskalsAlgorithm implements MazeAlgorithm
+public class KruskalsAlgorithm extends MazeAlgorithm
 {
-	private Maze maze;
-	@Override
-	public Maze getMaze()
-	{
-		return maze;
-	}
 	
-	private List<Edge> edges = new ArrayList<Edge>();	
-	@Override
-	public List<Edge> getEdges()
-	{
-		return edges;
-	}
 	
 	private Random random = new Random(System.currentTimeMillis());	
 	private List<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell>>();
 
-	@Override
 	public void carve(Maze maze)
 	{
-		this.maze = maze;
+		setMaze(maze);
 		generateInitialSets();
 		
 		while(cells.size() > 1)
@@ -66,7 +53,7 @@ public class KruskalsAlgorithm implements MazeAlgorithm
 					{
 						cell.setState(CellState.IN);
 						connecting.setState(CellState.IN);
-						edges.add(new Edge(cell, connecting));
+						getEdges().add(new Edge(cell, connecting));
 						break done;
 					}
 				}
@@ -96,7 +83,7 @@ public class KruskalsAlgorithm implements MazeAlgorithm
 	private List<Cell> getNeighbours(Cell cell)
 	{
 		List<Cell> neighbours = new ArrayList<Cell>();
-		for(Cell nextCell : maze.getCellList())
+		for(Cell nextCell : getMaze().getCellList())
 		{
 			if(canCellsConnect(cell, nextCell))
 			{
@@ -126,7 +113,7 @@ public class KruskalsAlgorithm implements MazeAlgorithm
 	
 	private void generateInitialSets()
 	{
-		for(Cell cell : maze.getCellList())
+		for(Cell cell : getMaze().getCellList())
 		{
 			ArrayList<Cell> tmp = new ArrayList<Cell>();
 			tmp.add(cell);

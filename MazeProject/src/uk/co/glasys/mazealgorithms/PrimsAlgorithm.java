@@ -11,16 +11,16 @@ import uk.co.glasys.Edge;
 import uk.co.glasys.Maze;
 
 
-public class PrimsAlgorithm implements MazeAlgorithm
+public class PrimsAlgorithm extends MazeAlgorithm
 {
-	private Maze maze;
-	@Override
-	public Maze getMaze(){return maze;}
-	public void setMaze(Maze maze){this.maze = maze;}
-
-	private List<Edge> edges = new ArrayList<Edge>();
-	@Override
-	public List<Edge> getEdges(){return edges;}
+//	private Maze maze;
+//	@Override
+//	public Maze getMaze(){return maze;}
+//	public void setMaze(Maze maze){this.maze = maze;}
+//
+//	private List<Edge> edges = new ArrayList<Edge>();
+//	@Override
+//	public List<Edge> getEdges(){return edges;}
 	
 	@Override
 	public void carve(Maze maze)
@@ -28,11 +28,11 @@ public class PrimsAlgorithm implements MazeAlgorithm
 		setMaze(maze);
 //		edges = new ArrayList<Edge>();
 		Random random = new Random(System.currentTimeMillis());			
-		Cell currentCell = maze.getCellList().get(random.nextInt(maze.size()));		
+		Cell currentCell = getMaze().getCellList().get(random.nextInt(getMaze().size()));		
 		currentCell.setState(CellState.IN);
 		Cell nextCell = null;		
 		
-		while(maze.getCellList()
+		while(getMaze().getCellList()
 					.stream()
 					.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
 		{
@@ -88,14 +88,14 @@ public class PrimsAlgorithm implements MazeAlgorithm
 			switch (i)
 			{
 				case 0:
-				if(index - getMaze().getWidth() >= 0 && index - getMaze().getWidth() < maze.size())
+				if(index - getMaze().getWidth() >= 0 && index - getMaze().getWidth() < getMaze().size())
 				{
 					toCheck = getMaze().getCellList().get(index - getMaze().getWidth());
 					break;
 				}
 					
 				case 1:
-				if (index + 1 >= 0 && index + 1 < maze.size() &&
+				if (index + 1 >= 0 && index + 1 < getMaze().size() &&
 						getMaze().getCellList().get(index + 1).getY() ==  getMaze().getCellList().get(index).getY())
 				{
 					toCheck = getMaze().getCellList().get(index + 1);
@@ -139,6 +139,6 @@ public class PrimsAlgorithm implements MazeAlgorithm
 	@Override
 	public int hashCode()
 	{//TODO seems a bit silly would be the same as the maze.
-		return Objects.hash(maze.hashCode());
+		return Objects.hash(getMaze().hashCode());
 	}
 }

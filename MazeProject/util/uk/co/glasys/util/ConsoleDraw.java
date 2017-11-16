@@ -59,7 +59,7 @@ public class ConsoleDraw implements MazeDrawer
 			}
 			
 			int cellindex = cell.getY() *  algorithm.getMaze().getWidth() + cell.getX();
-			List<Cell> neigbours = algorithm.getMaze().getConnectedCells(cell);//TODO getConnectedCells broken
+			List<Cell> neigbours = algorithm.getConnectedCells(cell);//TODO getConnectedCells broken
 			
 			if(cellindex + algorithm.getMaze().getWidth() < algorithm.getMaze().size() &&
 					neigbours.contains(algorithm.getMaze().getCellList().get(

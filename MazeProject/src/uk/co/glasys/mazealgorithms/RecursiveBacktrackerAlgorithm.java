@@ -10,36 +10,21 @@ import uk.co.glasys.Maze;
 import uk.co.glasys.Cell;
 import uk.co.glasys.Cell.CellState;
 
-public class RecursiveBacktrackerAlgorithm implements MazeAlgorithm
+public class RecursiveBacktrackerAlgorithm extends MazeAlgorithm
 {
-
-	private Maze maze;
-	@Override
-	public Maze getMaze()
-	{
-		return maze;
-	}
-	
-	private List<Edge> edges = new ArrayList<Edge>();
-	@Override
-	public List<Edge> getEdges()
-	{
-		return edges;
-	}
-	
 	Random random = new Random(System.currentTimeMillis());			
 
 	@Override
 	public void carve(Maze maze)
 	{
-		this.maze = maze;
+		setMaze(maze);
 		
-		Cell current = maze.getCellList().get(random.nextInt(maze.size()));
+		Cell current = getMaze().getCellList().get(random.nextInt(getMaze().size()));
 		current.setState(CellState.IN);
 		
 		Cell next = null;
 		
-		while(maze.getCellList()
+		while(getMaze().getCellList()
 				.stream()
 				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
 		{
@@ -48,7 +33,7 @@ public class RecursiveBacktrackerAlgorithm implements MazeAlgorithm
 			{
 				next = neighbours.get(random.nextInt(neighbours.size()));
 				next.setState(CellState.IN);
-				edges.add(new Edge(current, next));
+				getEdges().add(new Edge(current, next));
 				current = next;
 			}
 			else
@@ -62,9 +47,9 @@ public class RecursiveBacktrackerAlgorithm implements MazeAlgorithm
 	{//TODO copied from PrimsAlgorithm so should be moved out for sharing/re-use
 		Cell next = null;
 		
-		for(int i = edges.size() - 1; i >= 0; --i)
+		for(int i = getEdges().size() - 1; i >= 0; --i)
 		{
-			Edge edge = edges.get(i);
+			Edge edge = getEdges().get(i);
 
 			if(!edge.getTo().equals(current) && !getNeighbours(edge.getTo()).isEmpty())
 			{
@@ -86,36 +71,36 @@ public class RecursiveBacktrackerAlgorithm implements MazeAlgorithm
 
 		for(int i = 0; i < current.getNumberOfSides(); ++i)
 		{//TODO need to accommodate more than four sides
-			int index = maze.getCellList().indexOf(current);
+			int index = getMaze().getCellList().indexOf(current);
 			Cell toCheck = null;
 			
 			switch (i)
 			{
 				case 0:
-				if(index - maze.getWidth() >= 0 && index - maze.getWidth() < maze.size())
+				if(index - getMaze().getWidth() >= 0 && index - getMaze().getWidth() < getMaze().size())
 				{
-					toCheck = maze.getCellList().get(index - maze.getWidth());
+					toCheck = getMaze().getCellList().get(index - getMaze().getWidth());
 					break;
 				}
 					
 				case 1:
-				if (index + 1 >= 0 && index + 1 < maze.size() &&
-						 maze.getCellList().get(index + 1).getY() ==  maze.getCellList().get(index).getY())
+				if (index + 1 >= 0 && index + 1 < getMaze().size() &&
+						getMaze().getCellList().get(index + 1).getY() ==  getMaze().getCellList().get(index).getY())
 				{
-					toCheck = maze.getCellList().get(index + 1);
+					toCheck = getMaze().getCellList().get(index + 1);
 					break;
 				}
 				case 2:
-				if (index + maze.getWidth() >= 0 && index + maze.getWidth() < maze.size())
+				if (index + getMaze().getWidth() >= 0 && index + getMaze().getWidth() < getMaze().size())
 				{
-					toCheck = maze.getCellList().get(index + maze.getWidth());
+					toCheck = getMaze().getCellList().get(index + getMaze().getWidth());
 					break;
 				}
 				case 3:
-				if (index - 1 >= 0 && index - 1 < maze.size() &&
-						 maze.getCellList().get(index - 1).getY() ==  maze.getCellList().get(index).getY())
+				if (index - 1 >= 0 && index - 1 < getMaze().size() &&
+						getMaze().getCellList().get(index - 1).getY() ==  getMaze().getCellList().get(index).getY())
 				{
-					toCheck = maze.getCellList().get(index - 1);
+					toCheck = getMaze().getCellList().get(index - 1);
 					break;
 				}
 			}
