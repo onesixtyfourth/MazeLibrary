@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import uk.co.glasys.Cell;
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
@@ -12,9 +15,11 @@ import uk.co.glasys.Maze;
 public class KruskalsAlgorithm extends MazeAlgorithm
 {
 	private List<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell>>();
+	private Logger logger = LogManager.getLogger(KruskalsAlgorithm.class);
 
 	public void carve(Maze maze)
 	{
+		logger.info(String.format("%s starting to carve", getAlgorithmName()));
 		setMaze(maze);
 		generateCellList();
 		generateInitialSets();
@@ -36,6 +41,7 @@ public class KruskalsAlgorithm extends MazeAlgorithm
 			}
 			connectPaths(cells.get(0), selectedPath);
 		}
+		logger.info(String.format("%s finished carving", getAlgorithmName()));
 	}
 	
 	private void connectPaths(List<Cell> path, List<Cell> connect)
@@ -90,25 +96,6 @@ public class KruskalsAlgorithm extends MazeAlgorithm
 		}
 		return neighbours;
 	}
-	
-//	@Override
-//	public boolean canCellsConnect(Cell next, Cell potential)
-//	{
-//		boolean result = false;
-//		
-//		int dx = next.getX() - potential.getX();
-//		int dy = next.getY() - potential.getY();
-//		double distance = Math.sqrt(dx * dx + dy * dy);
-//		
-//		if(distance == 1)
-//		{
-//			if(next.getX() == potential.getX() || next.getY() == potential.getY())
-//			{
-//				result = true;
-//			}
-//		}		
-//		return result;
-//	}
 	
 	private void generateInitialSets()
 	{

@@ -2,6 +2,9 @@ package uk.co.glasys;
 
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Edge
 {
 	private Cell from;
@@ -10,12 +13,15 @@ public class Edge
 	
 	private Cell to;
 	public Cell getTo(){return to;}
-	public void setTo(Cell to){this.to = to;}		
+	public void setTo(Cell to){this.to = to;}	
+	
+	private Logger logger = LogManager.getLogger(Edge.class);
 
 	public Edge(Cell from, Cell to)
 	{
 		setFrom(from);
 		setTo(to);
+		logger.info(String.format("Edge constructor creating edge from: %s, to %s", from, to));
 	}
 	
 	public boolean containsCell(Cell cell)

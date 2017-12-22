@@ -2,6 +2,9 @@ package uk.co.glasys;
 
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Maze
 {
 	private static final int DEFAULT_WIDTH = 10;	
@@ -15,20 +18,25 @@ public class Maze
 	public int getHeight(){return height;}
 	public void setHeight(int height){this.height = height;}	
 	
+	private Logger logger = LogManager.getLogger(Maze.class);
+	
 	public Maze()
 	{
 		this(getDefaultWidth());
+		logger.info("Maze default constructor");
 	}
 	
 	public Maze(int size)
 	{
 		this(size, size);
+		logger.info(String.format("Maze single argument constructor size: %d", size));
 	}
 	
 	public Maze(int width, int height)
 	{
 		setWidth(width);
 		setHeight(height);
+		logger.info(String.format("Maze constructed with width: %d, height: %d", width, height));
 	}	
 	
 	public int size()

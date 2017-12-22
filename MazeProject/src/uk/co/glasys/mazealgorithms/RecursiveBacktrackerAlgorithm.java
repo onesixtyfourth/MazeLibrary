@@ -2,6 +2,9 @@ package uk.co.glasys.mazealgorithms;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import uk.co.glasys.Cell;
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
@@ -9,9 +12,12 @@ import uk.co.glasys.Maze;
 
 public class RecursiveBacktrackerAlgorithm extends MazeAlgorithm
 {
+	private Logger logger = LogManager.getLogger(RecursiveBacktrackerAlgorithm.class);
+	
 	@Override
 	public void carve(Maze maze)
 	{
+		logger.info(String.format("%s starting to carve", getAlgorithmName()));
 		setMaze(maze);
 		generateCellList();
 		Cell current = getCells().get(random.nextInt(getMaze().size()));
@@ -35,10 +41,12 @@ public class RecursiveBacktrackerAlgorithm extends MazeAlgorithm
 				current = backtrack(current);
 			}
 		}
+		logger.info(String.format("%s finished carving", getAlgorithmName()));
 	}
 
 	private Cell backtrack(Cell current)
 	{//TODO copied from PrimsAlgorithm so should be moved out for sharing/re-use
+		logger.info(String.format("Backtrcking from %s", current));
 		Cell next = null;
 		
 		for(int i = getEdges().size() - 1; i >= 0; --i)

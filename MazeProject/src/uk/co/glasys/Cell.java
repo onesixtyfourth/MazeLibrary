@@ -2,6 +2,9 @@ package uk.co.glasys;
 
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Cell
 {
 	private static final int DEFAULT_SIDES = 4;
@@ -31,9 +34,13 @@ public class Cell
 		IN, OUT, FRONTIER
 	}	
 	
+	
+	private Logger logger = LogManager.getLogger(Cell.class);
+	
 	public Cell(int x, int y)
 	{
 		this(x, y, getDefaultSides());
+		logger.info(String.format("Cell two arg constructor x: %d, y: %d", x, y));
 	}
 	
 	public Cell(int x, int y, int sides)
@@ -42,6 +49,7 @@ public class Cell
 		setY(y);
 		setNumberOfSides(sides);
 		setState(CellState.OUT);
+		logger.info(String.format("Cell three arg constructor x: %d, y: %d, sides: %d", x, y, sides));
 	}	
 	
 	@Override

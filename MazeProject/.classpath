@@ -5,5 +5,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="util"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Temp/apache-log4j-2.10.0-bin/log4j-core-2.10.0.jar"/>
+	<classpathentry kind="lib" path="C:/Temp/apache-log4j-2.10.0-bin/log4j-api-2.10.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

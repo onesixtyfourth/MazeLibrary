@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import uk.co.glasys.Cell;
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
@@ -24,7 +27,9 @@ public abstract class MazeAlgorithm
 	public List<Edge> getEdges(){return edges;}
 	public void setEdges(List<Edge> edges){this.edges = edges;}
 	
-	protected Random random = new Random(System.currentTimeMillis());			
+	protected Random random = new Random(System.currentTimeMillis());	
+	
+	private Logger logger = LogManager.getLogger(MazeAlgorithm.class);
 	
 	/**
 	 * Carve a path through the maze
@@ -34,6 +39,7 @@ public abstract class MazeAlgorithm
 
 	public List<Cell> getConnectedCells(Cell cell)
 	{
+		logger.info(String.format("Retrieving cells connected to %s", cell));
 		List<Cell> cellList = new ArrayList<Cell>();
 		
 		getEdges().forEach(item ->
@@ -53,10 +59,12 @@ public abstract class MazeAlgorithm
 	public void reset()
 	{
 		getCells().forEach(l -> l.setState(CellState.OUT));
+		logger.info(String.format("%s called the reset method %s", this.getClass(), toString()));
 	}
 	
 	public List<Cell> getNeighbours(Cell cell)
 	{
+		logger.info(String.format("Retrieving neighbours for %s", cell));
 		List<Cell> neighbours = new ArrayList<Cell>();
 
 		for(int i = 0; i < cell.getNumberOfSides(); ++i)
@@ -118,7 +126,9 @@ public abstract class MazeAlgorithm
 			{
 				result = true;
 			}
-		}		
+		}	
+		
+		logger.info(String.format("Can %s and %s connect: ", next, potential, result));
 		return result;
 	}
 	
@@ -131,6 +141,7 @@ public abstract class MazeAlgorithm
 			int y = i / maze.getWidth();
 			getCells().add(new Cell(x, y));
 		}
+		logger.info("Cell list generated");
 	}
 	
 	/**

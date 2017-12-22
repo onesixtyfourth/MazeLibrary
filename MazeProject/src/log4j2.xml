@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+  <Appenders>
+  
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+    
+    <RollingFile name="FILE" fileName="MazeProject.log" filePattern="MazeProject.log.%i" ignoreExceptions="false">		
+		<PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>	    
+	   	<Policies>
+	        <SizeBasedTriggeringPolicy size="10000 KB" />
+	    </Policies>
+    	<DefaultRolloverStrategy max="5" />
+	</RollingFile>
+        
+  </Appenders>
+  
+  <Loggers>    
+    
+    <Root level="ALL">
+      <AppenderRef ref="FILE"/>
+    </Root>
+    
+  </Loggers>
+</Configuration>

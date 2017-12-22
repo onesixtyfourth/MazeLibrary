@@ -2,6 +2,9 @@ package uk.co.glasys.mazealgorithms;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import uk.co.glasys.Cell;
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
@@ -9,9 +12,12 @@ import uk.co.glasys.Maze;
 
 public class PrimsAlgorithm extends MazeAlgorithm
 {	
+	private Logger logger = LogManager.getLogger(PrimsAlgorithm.class);
+	
 	@Override
 	public void carve(Maze maze)
 	{
+		logger.info(String.format("%s starting to carve", getAlgorithmName()));
 		setMaze(maze);
 		generateCellList();		
 		Cell currentCell = getCells().get(random.nextInt(getMaze().size()));		
@@ -35,12 +41,14 @@ public class PrimsAlgorithm extends MazeAlgorithm
 				currentCell = backTrack(currentCell);
 			}
 		}
+		logger.info(String.format("%s finished carving", getAlgorithmName()));
 	}	
 	
 	//TODO check this is actually correctly backtracking. It should be as the reverse order of the edges
 	//will reflect the paths creation so far. If it isn't I will have to trace the path backwards.
 	private Cell backTrack(Cell cell)
 	{
+		logger.info(String.format("Backtrcking from %s", cell));
 		Cell next = null;
 		
 		for(int i = getEdges().size() - 1; i >= 0; --i)

@@ -3,6 +3,9 @@ package uk.co.glasys.mazealgorithms;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import uk.co.glasys.Cell;
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
@@ -11,9 +14,12 @@ import uk.co.glasys.Maze;
 public class HuntAndKillAlgorithm extends MazeAlgorithm
 {
 
+	private Logger logger = LogManager.getLogger(HuntAndKillAlgorithm.class);
+	
 	@Override
 	public void carve(Maze maze)
 	{
+		logger.info(String.format("%s starting to carve", getAlgorithmName()));
 		setMaze( maze);
 		generateCellList();	
 		Cell currentCell = getCells().get(random.nextInt(getMaze().size()));		
@@ -38,6 +44,7 @@ public class HuntAndKillAlgorithm extends MazeAlgorithm
 				currentCell = huntForNext();
 			}
 		}
+		logger.info(String.format("%s finished carving", getAlgorithmName()));
 	}	
 	
 	private Cell huntForNext()
@@ -80,6 +87,7 @@ public class HuntAndKillAlgorithm extends MazeAlgorithm
 			next.setState(CellState.IN);
 		}
 		
+		logger.info(String.format("Cell %s selected as next", next));
 		return next;
 	}
 }

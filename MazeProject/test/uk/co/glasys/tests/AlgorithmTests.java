@@ -2,11 +2,9 @@ package uk.co.glasys.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import uk.co.glasys.Cell;
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Maze;
 import uk.co.glasys.mazealgorithms.HuntAndKillAlgorithm;
