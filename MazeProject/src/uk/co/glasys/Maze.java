@@ -23,13 +23,13 @@ public class Maze
 	public Maze()
 	{
 		this(getDefaultWidth());
-		logger.info("Maze default constructor");
+//		logger.info("Maze default constructor");
 	}
 	
 	public Maze(int size)
 	{
 		this(size, size);
-		logger.info(String.format("Maze single argument constructor size: %d", size));
+//		logger.info(String.format("Maze single argument constructor size: %d", size));
 	}
 	
 	public Maze(int width, int height)

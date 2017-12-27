@@ -40,7 +40,7 @@ public class Cell
 	public Cell(int x, int y)
 	{
 		this(x, y, getDefaultSides());
-		logger.info(String.format("Cell two arg constructor x: %d, y: %d", x, y));
+//		logger.info(String.format("Cell two arg constructor x: %d, y: %d", x, y));
 	}
 	
 	public Cell(int x, int y, int sides)

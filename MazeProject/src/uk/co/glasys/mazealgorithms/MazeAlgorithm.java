@@ -39,7 +39,7 @@ public abstract class MazeAlgorithm
 
 	public List<Cell> getConnectedCells(Cell cell)
 	{
-		logger.info(String.format("Retrieving cells connected to %s", cell));
+//		logger.info(String.format("Retrieving cells connected to %s", cell));
 		List<Cell> cellList = new ArrayList<Cell>();
 		
 		getEdges().forEach(item ->
@@ -59,12 +59,12 @@ public abstract class MazeAlgorithm
 	public void reset()
 	{
 		getCells().forEach(l -> l.setState(CellState.OUT));
-		logger.info(String.format("%s called the reset method %s", this.getClass(), toString()));
+//		logger.info(String.format("%s called the reset method %s", this.getClass(), toString()));
 	}
 	
 	public List<Cell> getNeighbours(Cell cell)
 	{
-		logger.info(String.format("Retrieving neighbours for %s", cell));
+//		logger.info(String.format("Retrieving neighbours for %s", cell));
 		List<Cell> neighbours = new ArrayList<Cell>();
 
 		for(int i = 0; i < cell.getNumberOfSides(); ++i)
@@ -128,7 +128,7 @@ public abstract class MazeAlgorithm
 			}
 		}	
 		
-		logger.info(String.format("Can %s and %s connect: ", next, potential, result));
+//		logger.info(String.format("Can %s and %s connect: %s", next, potential, result));
 		return result;
 	}
 	
@@ -141,7 +141,7 @@ public abstract class MazeAlgorithm
 			int y = i / maze.getWidth();
 			getCells().add(new Cell(x, y));
 		}
-		logger.info("Cell list generated");
+//		logger.info("Cell list generated");
 	}
 	
 	/**

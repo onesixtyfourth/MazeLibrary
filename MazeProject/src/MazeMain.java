@@ -1,9 +1,6 @@
 import uk.co.glasys.Maze;
-import uk.co.glasys.mazealgorithms.HuntAndKillAlgorithm;
-import uk.co.glasys.mazealgorithms.KruskalsAlgorithm;
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
-import uk.co.glasys.mazealgorithms.PrimsAlgorithm;
-import uk.co.glasys.mazealgorithms.RecursiveBacktrackerAlgorithm;
+import uk.co.glasys.util.AlgorithmFactory;
 import uk.co.glasys.util.ConsoleDraw;
 
 public class MazeMain
@@ -14,21 +11,12 @@ public class MazeMain
 	
 	public static void main(String [] args)
 	{
-		maze = new Maze();
-		algorithm = new PrimsAlgorithm();
-		carveAndDraw();
-		
-		algorithm.reset();		
-		algorithm = new HuntAndKillAlgorithm() ;
-		carveAndDraw();
-		
-		algorithm.reset();
-		algorithm = new KruskalsAlgorithm();
-		carveAndDraw();
-		
-		algorithm.reset();
-		algorithm = new RecursiveBacktrackerAlgorithm();
-		carveAndDraw();
+		maze = new Maze();		
+		for(int i = 0; i < 10; ++i)
+		{
+			algorithm = AlgorithmFactory.generateAlgorithm();		
+			carveAndDraw();
+		}
 	}
 	
 	private static void carveAndDraw()
