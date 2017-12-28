@@ -14,9 +14,16 @@ public class MazeMain
 		maze = new Maze();		
 		for(int i = 0; i < 10; ++i)
 		{
-			algorithm = AlgorithmFactory.generateAlgorithm();		
+			algorithm = AlgorithmFactory.getAlgorithmFactory().generateAlgorithm();		
 			carveAndDraw();
 		}
+		
+//		AlgorithmFactory f1 = AlgorithmFactory.getAlgorithmFactory();
+//		
+//		for(Class<MazeAlgorithm> algo : f1.getAlgorithmList())
+//		{
+//			System.out.println(algo.getName());
+//		}
 	}
 	
 	private static void carveAndDraw()

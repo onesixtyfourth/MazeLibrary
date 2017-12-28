@@ -13,19 +13,61 @@ import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 
 public class AlgorithmFactory
 {
-	private static List<Class> classes;
+	private List<Class<MazeAlgorithm>> classes;
+	public List<Class<MazeAlgorithm>> getAlgorithmList()
+	{
+		if(Objects.isNull(classes))
+		{
+			setAlgorithmNames();
+		}
+		return classes;
+	}
 	
-	public static MazeAlgorithm generateAlgorithm() 
+	private String packageName = "";
+	public String getPackageName()
+	{
+		if(packageName.isEmpty())
+		{
+			packageName = baseClass.getPackage().toString();
+			packageName = packageName.substring(packageName.lastIndexOf(' '), packageName.length()).trim();
+		}	
+		return packageName;
+	}
+	
+	public String getPackagePath()
+	{
+		String tmp = getBaseClass().getPackage().toString().replace('.', '/');
+		return tmp.substring(tmp.lastIndexOf(' '), tmp.length()).trim();
+	}
+	
+	private Class<MazeAlgorithm> baseClass = MazeAlgorithm.class;
+	public Class<MazeAlgorithm> getBaseClass()
+	{
+		return baseClass;
+	}
+	
+	private static  AlgorithmFactory factoryInstance = null;
+	public static AlgorithmFactory getAlgorithmFactory()
+	{
+		if(Objects.isNull(factoryInstance))
+		{
+			factoryInstance = new AlgorithmFactory();
+		}
+		return factoryInstance;
+	}
+	
+	private AlgorithmFactory()
+	{
+	}
+	
+	public MazeAlgorithm generateAlgorithm() 
 	{
 		MazeAlgorithm algorithm = null;	
-		if(!Objects.nonNull(classes))
-		{
-			classes = getAllAlgorithmNames();	
-		}			
+
 		try
 		{
-			Collections.shuffle(classes);
-			 algorithm = (MazeAlgorithm) classes.get(0).newInstance();
+			Collections.shuffle(getAlgorithmList());
+			algorithm = (MazeAlgorithm) getAlgorithmList().get(0).newInstance();
 		} catch (InstantiationException | IllegalAccessException e)
 		{
 			e.printStackTrace();
@@ -33,17 +75,16 @@ public class AlgorithmFactory
 		return algorithm;
 	}
 	
-	private static List<Class> getAllAlgorithmNames() 
+	//TODO won't work if this is ever ran from a jar
+	@SuppressWarnings("unchecked")
+	private void setAlgorithmNames() 
 	{
-		classes = new ArrayList<Class>();		
+		classes = new ArrayList<Class<MazeAlgorithm>>();		
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();		
-		Class<?>c = MazeAlgorithm.class;		
-		String tmp = c.getPackage().toString().replace('.', '/');
-		String pkg = tmp.substring(tmp.lastIndexOf(' '), tmp.length()).trim();
 		
 		try
 		{
-			Enumeration<URL> res = loader.getResources(pkg);			
+			Enumeration<URL> res = loader.getResources(getPackagePath());			
 			
 			while(res.hasMoreElements())
 			{
@@ -55,7 +96,7 @@ public class AlgorithmFactory
 					if(!file.getName().contains("MazeAlgorithm"))
 					{
 						String className = file.getName().substring(0, file.getName().lastIndexOf('.'));
-						classes.add(loader.loadClass("uk.co.glasys.mazealgorithms." + className));
+						classes.add( (Class<MazeAlgorithm>) loader.loadClass(getPackageName() + "." + className ));
 					}					
 				}
 			}
@@ -63,6 +104,5 @@ public class AlgorithmFactory
 		{
 			e.printStackTrace();
 		}
-		return classes;
 	}
 }

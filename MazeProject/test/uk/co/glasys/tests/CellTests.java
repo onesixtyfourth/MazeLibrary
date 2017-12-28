@@ -12,7 +12,8 @@ public class CellTests
 		int x = 5;
 		int y = 6;
 		Cell cell = new Cell(x, y);
-		assertTrue(cell.getX() == x && cell.getY() == y && cell.getNumberOfSides() == Cell.getDefaultSides());
+		assertTrue("Constructor did not set up correctly", 
+				cell.getX() == x && cell.getY() == y && cell.getNumberOfSides() == Cell.getDefaultSides());
 	}
 	
 	@Test
@@ -22,14 +23,15 @@ public class CellTests
 		int y = 6;
 		int sides = 6;
 		Cell cell = new Cell(x, y, sides);
-		assertTrue(cell.getX() == x && cell.getY() == y && cell.getNumberOfSides() == sides);
+		assertTrue("Constructor did not set up correctly", 
+				cell.getX() == x && cell.getY() == y && cell.getNumberOfSides() == sides);
 	}
 	
 	@Test
 	public void testEqualsMethodForSameObject()
 	{
 		Cell cell = new Cell(5, 6);
-		assertTrue(cell.equals(cell));
+		assertTrue("Equality test failed", cell.equals(cell));
 	}
 	
 	@Test
@@ -37,7 +39,7 @@ public class CellTests
 	{
 		Cell cellOne = new Cell(5, 6);
 		Cell cellTwo = new Cell(5, 6);
-		assertTrue(cellOne.equals(cellTwo));
+		assertTrue("Equality test failed", cellOne.equals(cellTwo));
 	}
 	
 	@Test
@@ -45,6 +47,6 @@ public class CellTests
 	{
 		Cell cellOne = new Cell(5, 6);
 		Cell cellTwo = new Cell(6, 7);
-		assertFalse(cellOne.equals(cellTwo));
+		assertFalse("Equality test failed", cellOne.equals(cellTwo));
 	}
 }

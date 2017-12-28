@@ -20,7 +20,7 @@ public class AlgorithmTests
 	public void primsNameTest()
 	{
 		MazeAlgorithm algorithm = new PrimsAlgorithm();
-		assertEquals("Prims", algorithm.getAlgorithmName());
+		assertEquals("Incorrect Algorithm Name", "Prims", algorithm.getAlgorithmName());
 	}
 	
 	@Test
@@ -30,7 +30,7 @@ public class AlgorithmTests
 		MazeAlgorithm algorithm = new PrimsAlgorithm();
 		algorithm.carve(maze);
 		
-		assertFalse(algorithm.getCells()
+		assertFalse("Not all Cells are IN", algorithm.getCells()
 							.stream()
 							.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 		
@@ -43,7 +43,7 @@ public class AlgorithmTests
 		MazeAlgorithm algorithm = new HuntAndKillAlgorithm();
 		algorithm.carve(maze);
 		
-		assertFalse(algorithm.getCells()
+		assertFalse("Not all Cells are IN", algorithm.getCells()
 							.stream()
 							.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 	}
@@ -55,9 +55,9 @@ public class AlgorithmTests
 		MazeAlgorithm algorithm = new KruskalsAlgorithm();
 		algorithm.carve(maze);
 		
-		assertFalse(algorithm.getCells()
-				.stream()
-				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
+		assertFalse("Not all Cells are IN", algorithm.getCells()
+							.stream()
+							.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 		
 	}
 	
@@ -68,34 +68,8 @@ public class AlgorithmTests
 		MazeAlgorithm algorithm = new RecursiveBacktrackerAlgorithm();
 		algorithm.carve(maze);
 		
-		assertFalse(algorithm.getCells()
-				.stream()
-				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
+		assertFalse("Not all Cells are IN", algorithm.getCells()
+								.stream()
+								.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 	}
-	
-//TODO needs refactoring as reset currently will not work from the maze object	
-//	@Test
-//	public void testResetMaze()
-//	{
-//		Maze maze = new Maze();
-//		MazeAlgorithm algorithm = new PrimsAlgorithm();
-//		algorithm.carve(maze);
-//		
-//		assertFalse(algorithm.getCells()
-//							.stream()
-//							.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
-////		assertEquals("Prims", maze.getAlgorithm().getAlgorithmName());
-//		
-//		algorithm = new HuntAndKillAlgorithm();
-//		maze.resetMaze();
-//		algorithm.carve(maze);
-//		
-//		assertFalse(algorithm.getCells()
-//							.stream()
-//							.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
-////		assertEquals("HuntAndKill", maze.getAlgorithm().getAlgorithmName());
-//	}
-	
-	
-
 }
