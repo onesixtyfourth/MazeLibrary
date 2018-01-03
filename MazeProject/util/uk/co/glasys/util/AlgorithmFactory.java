@@ -9,18 +9,19 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 
 public class AlgorithmFactory
 {
-	private List<Class<MazeAlgorithm>> classes;
-	public List<Class<MazeAlgorithm>> getAlgorithmList()
+	private Logger logger = LogManager.getLogger(AlgorithmFactory.class);
+	
+	private Class<MazeAlgorithm> baseClass = MazeAlgorithm.class;
+	public Class<MazeAlgorithm> getBaseClass()
 	{
-		if(Objects.isNull(classes))
-		{
-			setAlgorithmNames();
-		}
-		return classes;
+		return baseClass;
 	}
 	
 	private String packageName = "";
@@ -40,14 +41,18 @@ public class AlgorithmFactory
 		return tmp.substring(tmp.lastIndexOf(' '), tmp.length()).trim();
 	}
 	
-	private Class<MazeAlgorithm> baseClass = MazeAlgorithm.class;
-	public Class<MazeAlgorithm> getBaseClass()
+	private List<Class<MazeAlgorithm>> classes;
+	public List<Class<MazeAlgorithm>> getAlgorithmList()
 	{
-		return baseClass;
+		if(Objects.isNull(classes))
+		{
+			setAlgorithmNames();
+		}
+		return classes;
 	}
 	
-	private static  AlgorithmFactory factoryInstance = null;
-	public static AlgorithmFactory getAlgorithmFactory()
+	private static AlgorithmFactory factoryInstance = null;
+	public synchronized static AlgorithmFactory getAlgorithmFactory()
 	{
 		if(Objects.isNull(factoryInstance))
 		{
@@ -58,6 +63,7 @@ public class AlgorithmFactory
 	
 	private AlgorithmFactory()
 	{
+		logger.info("AlgorithmFactory Created");
 	}
 	
 	public MazeAlgorithm generateAlgorithm() 
@@ -72,10 +78,11 @@ public class AlgorithmFactory
 		{
 			e.printStackTrace();
 		}
+		logger.info(String.format("Algorithm %s Generated", algorithm.getAlgorithmName()));
 		return algorithm;
 	}
 	
-	//TODO won't work if this is ever ran from a jar
+	//TODO needs work if this is ever ran from a jar
 	@SuppressWarnings("unchecked")
 	private void setAlgorithmNames() 
 	{

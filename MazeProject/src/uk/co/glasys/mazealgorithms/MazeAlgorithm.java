@@ -27,6 +27,9 @@ public abstract class MazeAlgorithm
 	public List<Edge> getEdges(){return edges;}
 	public void setEdges(List<Edge> edges){this.edges = edges;}
 	
+	private List<ArrayList<Cell>> cellSets = new ArrayList<ArrayList<Cell>>();
+	public List<ArrayList<Cell>> getCellSets(){return cellSets;}
+	
 	protected Random random = new Random(System.currentTimeMillis());	
 	
 	private Logger logger = LogManager.getLogger(MazeAlgorithm.class);
@@ -103,6 +106,7 @@ public abstract class MazeAlgorithm
 				}
 			}
 			
+			//TODO maybe move this out as not all calls will want it
 			if(Objects.nonNull(toCheck) && toCheck.getState() != CellState.IN )
 			{
 				neighbours.add(toCheck);
@@ -142,6 +146,70 @@ public abstract class MazeAlgorithm
 			getCells().add(new Cell(x, y));
 		}
 //		logger.info("Cell list generated");
+	}
+	
+	public List<Cell> pathNeighbours(List<Cell> path)
+	{
+		List<Cell> neighbours = new ArrayList<Cell>();
+		for(Cell cell : path)
+		{
+			List<Cell> tmp = getNeighbours(cell);
+			for(Cell possible : tmp)
+			{
+				if(!path.contains(possible) && !neighbours.contains(possible))
+				{
+					neighbours.add(possible);
+				}
+			}
+		}
+		return neighbours;
+	}
+	
+	public void connectPaths(List<Cell> path, List<Cell> connect)
+	{
+		done:
+		{
+			for(Cell cell : path)
+			{
+				for(Cell connecting : connect)
+				{
+					if(canCellsConnect(cell, connecting))
+					{
+						cell.setState(CellState.IN);
+						connecting.setState(CellState.IN);
+						getEdges().add(new Edge(cell, connecting));
+						break done;
+					}
+				}
+			}
+		}
+		path.addAll(connect);
+		cellSets.remove(connect);
+	}
+	
+	public int cellInSet(Cell cell)
+	{
+		int result = -1;
+		
+		for(int i = 0; i < getCellSets().size(); ++i)
+		{
+			if(getCellSets().get(i).contains(cell))
+			{
+				result = i;
+				break;
+			}
+		}		
+		return result;
+	}
+	
+	public void generateInitialSets()
+	{
+		for(Cell cell : getCells())
+		{
+			ArrayList<Cell> tmp = new ArrayList<Cell>();
+			tmp.add(cell);
+			getCellSets().add(tmp);
+		}
 	}
 	
 	/**

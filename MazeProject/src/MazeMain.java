@@ -1,4 +1,5 @@
 import uk.co.glasys.Maze;
+import uk.co.glasys.mazealgorithms.EllersAlgorithm;
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
 import uk.co.glasys.util.AlgorithmFactory;
 import uk.co.glasys.util.ConsoleDraw;
@@ -12,18 +13,14 @@ public class MazeMain
 	public static void main(String [] args)
 	{
 		maze = new Maze();		
-		for(int i = 0; i < 10; ++i)
-		{
-			algorithm = AlgorithmFactory.getAlgorithmFactory().generateAlgorithm();		
-			carveAndDraw();
-		}
-		
-//		AlgorithmFactory f1 = AlgorithmFactory.getAlgorithmFactory();
-//		
-//		for(Class<MazeAlgorithm> algo : f1.getAlgorithmList())
+//		for(int i = 0; i < 10; ++i)
 //		{
-//			System.out.println(algo.getName());
+//			algorithm = AlgorithmFactory.getAlgorithmFactory().generateAlgorithm();		
+//			carveAndDraw();
 //		}
+		
+		algorithm = new EllersAlgorithm();
+		carveAndDraw();
 	}
 	
 	private static void carveAndDraw()
