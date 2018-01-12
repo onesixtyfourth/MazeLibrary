@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Maze;
+import uk.co.glasys.mazealgorithms.AldousBroderAlgorithm;
+import uk.co.glasys.mazealgorithms.EllersAlgorithm;
 import uk.co.glasys.mazealgorithms.HuntAndKillAlgorithm;
 import uk.co.glasys.mazealgorithms.KruskalsAlgorithm;
 import uk.co.glasys.mazealgorithms.MazeAlgorithm;
@@ -71,5 +73,30 @@ public class AlgorithmTests
 		assertFalse("Not all Cells are IN", algorithm.getCells()
 								.stream()
 								.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
+	}
+	
+//EllersAlgorithm does not currently set cellState when carving	
+//	@Test
+//	public void testEllersCarveMethod()
+//	{
+//		Maze maze = new Maze();
+//		MazeAlgorithm algorithm = new EllersAlgorithm();
+//		algorithm.carve(maze);
+//		
+//		assertFalse("Not all Cells are IN", algorithm.getCells()
+//				.stream()
+//				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
+//	}
+	
+	@Test
+	public void testAldousBroderCarveMethod()
+	{
+		Maze maze = new Maze();
+		MazeAlgorithm algorithm = new AldousBroderAlgorithm();
+		algorithm.carve(maze);
+		
+		assertFalse("Not all Cells are IN", algorithm.getCells()
+				.stream()
+				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT));
 	}
 }
