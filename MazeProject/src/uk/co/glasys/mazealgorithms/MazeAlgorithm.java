@@ -65,6 +65,19 @@ public abstract class MazeAlgorithm
 //		logger.info(String.format("%s called the reset method %s", this.getClass(), toString()));
 	}
 	
+	public List<Cell> getNeighboursNoState(Cell cell)
+	{
+		List<Cell> neighbours = new ArrayList<Cell>();
+		for(Cell nextCell : getCells())
+		{
+			if(canCellsConnect(cell, nextCell))
+			{
+				neighbours.add(nextCell);
+			}
+		}
+		return neighbours;
+	}
+	
 	public List<Cell> getNeighbours(Cell cell)
 	{
 //		logger.info(String.format("Retrieving neighbours for %s", cell));
@@ -148,12 +161,37 @@ public abstract class MazeAlgorithm
 //		logger.info("Cell list generated");
 	}
 	
+	//TODO check this is actually correctly backtracking. It should be as the reverse order of the edges
+		//will reflect the paths creation so far. If it isn't I will have to trace the path backwards.
+		public Cell backTrack(Cell cell)
+		{
+			logger.info(String.format("Backtrcking from %s", cell));
+			Cell next = null;
+			
+			for(int i = getEdges().size() - 1; i >= 0; --i)
+			{
+				Edge edge = getEdges().get(i);
+
+				if(!edge.getTo().equals(cell) && !getNeighbours(edge.getTo()).isEmpty())
+				{
+					next = edge.getTo();
+					break;
+				}
+				else if(!edge.getFrom().equals(cell) &&!getNeighbours(edge.getFrom()).isEmpty())
+				{
+					next = edge.getFrom();
+					break;
+				}
+			}
+			return next;
+		}
+	
 	public List<Cell> pathNeighbours(List<Cell> path)
 	{
 		List<Cell> neighbours = new ArrayList<Cell>();
 		for(Cell cell : path)
 		{
-			List<Cell> tmp = getNeighbours(cell);
+			List<Cell> tmp = getNeighboursNoState(cell);
 			for(Cell possible : tmp)
 			{
 				if(!path.contains(possible) && !neighbours.contains(possible))

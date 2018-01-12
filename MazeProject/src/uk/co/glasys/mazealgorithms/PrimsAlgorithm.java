@@ -43,29 +43,4 @@ public class PrimsAlgorithm extends MazeAlgorithm
 		}
 		logger.info(String.format("%s finished carving", getAlgorithmName()));
 	}	
-	
-	//TODO check this is actually correctly backtracking. It should be as the reverse order of the edges
-	//will reflect the paths creation so far. If it isn't I will have to trace the path backwards.
-	private Cell backTrack(Cell cell)
-	{
-		logger.info(String.format("Backtrcking from %s", cell));
-		Cell next = null;
-		
-		for(int i = getEdges().size() - 1; i >= 0; --i)
-		{
-			Edge edge = getEdges().get(i);
-
-			if(!edge.getTo().equals(cell) && !getNeighbours(edge.getTo()).isEmpty())
-			{
-				next = edge.getTo();
-				break;
-			}
-			else if(!edge.getFrom().equals(cell) &&!getNeighbours(edge.getFrom()).isEmpty())
-			{
-				next = edge.getFrom();
-				break;
-			}
-		}
-		return next;
-	}
 }

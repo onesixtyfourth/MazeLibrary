@@ -41,18 +41,4 @@ public class KruskalsAlgorithm extends MazeAlgorithm
 		}
 		logger.info(String.format("%s finished carving", getAlgorithmName()));
 	}
-	
-	@Override
-	public List<Cell> getNeighbours(Cell cell)
-	{
-		List<Cell> neighbours = new ArrayList<Cell>();
-		for(Cell nextCell : getCells())
-		{
-			if(canCellsConnect(cell, nextCell))
-			{
-				neighbours.add(nextCell);
-			}
-		}
-		return neighbours;
-	}
 }

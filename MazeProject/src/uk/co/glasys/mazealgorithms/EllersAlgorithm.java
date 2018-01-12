@@ -35,6 +35,7 @@ public class EllersAlgorithm extends MazeAlgorithm
 			createPathsToNextRow(i);
 		}
 		joinFinalPaths();
+		logger.info(String.format("%s finished carving", getAlgorithmName()));
 	}
 	
 	private void joinFinalPaths()

@@ -38,32 +38,9 @@ public class RecursiveBacktrackerAlgorithm extends MazeAlgorithm
 			}
 			else
 			{
-				current = backtrack(current);
+				current = backTrack(current);
 			}
 		}
 		logger.info(String.format("%s finished carving", getAlgorithmName()));
-	}
-
-	private Cell backtrack(Cell current)
-	{//TODO copied from PrimsAlgorithm so should be moved out for sharing/re-use
-		logger.info(String.format("Backtrcking from %s", current));
-		Cell next = null;
-		
-		for(int i = getEdges().size() - 1; i >= 0; --i)
-		{
-			Edge edge = getEdges().get(i);
-
-			if(!edge.getTo().equals(current) && !getNeighbours(edge.getTo()).isEmpty())
-			{
-				next = edge.getTo();
-				break;
-			}
-			else if(!edge.getFrom().equals(current) &&!getNeighbours(edge.getFrom()).isEmpty())
-			{
-				next = edge.getFrom();
-				break;
-			}
-		}
-		return next;
 	}
 }

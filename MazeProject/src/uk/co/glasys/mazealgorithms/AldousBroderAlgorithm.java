@@ -1,6 +1,5 @@
 package uk.co.glasys.mazealgorithms;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,9 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import uk.co.glasys.Cell;
-import uk.co.glasys.Maze;
 import uk.co.glasys.Cell.CellState;
 import uk.co.glasys.Edge;
+import uk.co.glasys.Maze;
 
 public class AldousBroderAlgorithm extends MazeAlgorithm
 {
@@ -31,7 +30,7 @@ public class AldousBroderAlgorithm extends MazeAlgorithm
 				.stream()
 				.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
 		{
-			List<Cell> neighbours = getNeighbours(currentCell);	
+			List<Cell> neighbours = getNeighboursNoState(currentCell);	
 			if(neighbours.size() > 0)
 			{
 				Collections.shuffle(neighbours);
@@ -43,20 +42,7 @@ public class AldousBroderAlgorithm extends MazeAlgorithm
 				}
 				currentCell = nextCell;
 			}			
-		}		
-	}
-	
-	@Override
-	public List<Cell> getNeighbours(Cell cell)
-	{
-		List<Cell> neighbours = new ArrayList<Cell>();
-		for(Cell nextCell : getCells())
-		{
-			if(canCellsConnect(cell, nextCell))
-			{
-				neighbours.add(nextCell);
-			}
-		}
-		return neighbours;
+		}	
+		logger.info(String.format("%s finished carving", getAlgorithmName()));
 	}
 }
