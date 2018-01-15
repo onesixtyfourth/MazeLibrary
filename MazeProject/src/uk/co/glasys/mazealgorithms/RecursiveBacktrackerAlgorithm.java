@@ -1,5 +1,6 @@
 package uk.co.glasys.mazealgorithms;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -31,7 +32,8 @@ public class RecursiveBacktrackerAlgorithm extends MazeAlgorithm
 			List<Cell> neighbours = getNeighbours(current);
 			if(neighbours.size() > 0)
 			{
-				next = neighbours.get(random.nextInt(neighbours.size()));
+				Collections.shuffle(neighbours);
+				next = neighbours.get(0);
 				next.setState(CellState.IN);
 				getEdges().add(new Edge(current, next));
 				current = next;

@@ -106,12 +106,10 @@ public class EllersAlgorithm extends MazeAlgorithm
 				{
 					if(random.nextBoolean())
 					{
-						List<Cell> cellSet = getCellSets().get(cellInSet(cell));
 						List<Cell> aSet = getCellSets().get(cellInSet(next));
 						getCellSets().remove(aSet);
 						getEdges().add(new Edge(cell, next));
 						getCellSets().get(cellInSet(cell)).addAll(aSet);
-//						connectPaths(cellSet, aSet);
 					}
 				}
 			}				

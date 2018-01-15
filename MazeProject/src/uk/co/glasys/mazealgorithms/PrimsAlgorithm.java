@@ -1,5 +1,6 @@
 package uk.co.glasys.mazealgorithms;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -29,9 +30,10 @@ public class PrimsAlgorithm extends MazeAlgorithm
 					.anyMatch(s -> s.getState() == CellState.FRONTIER || s.getState() == CellState.OUT))
 		{
 			List<Cell> neighbours = getNeighbours(currentCell);	
+			Collections.shuffle(neighbours);
 			if(neighbours.size() > 0)
 			{
-				nextCell = neighbours.get(random.nextInt(neighbours.size()));
+				nextCell = neighbours.get(0);
 				getEdges().add(new Edge(currentCell, nextCell));
 				nextCell.setState(CellState.IN);
 				currentCell = nextCell;
