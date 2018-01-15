@@ -24,7 +24,7 @@ public class KruskalsAlgorithm extends MazeAlgorithm
 		
 		while(getCellSets().size() > 1)
 		{
-			Collections.shuffle(getCellSets(), random);			
+			Collections.shuffle(getCellSets());			
 			List<Cell> neighbours = pathNeighbours(getCellSets().get(0));			
 			Cell chosen = neighbours.get(random.nextInt(neighbours.size()));			
 			List<Cell> selectedPath = new ArrayList<Cell>();
